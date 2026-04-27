@@ -129,6 +129,12 @@ const STACK_LAYERS = [
     desc: "Встраиваюсь в вашу воронку или собираю собственную веб-панель.",
   },
   {
+    label: "Автоматизация",
+    color: "#f59e42",
+    items: ["n8n", "Make", "Webhooks", "API"],
+    desc: "Связываю всё в единый поток: агент → CRM → уведомление → аналитика.",
+  },
+  {
     label: "Аналитика",
     color: "#34d399",
     items: ["Дашборд", "История диалогов", "Воронка лидов", "Метрики"],
@@ -214,16 +220,37 @@ function Calculator() {
   );
 }
 
+/* ── Quick starters for demo block ── */
+const QUICK_QUESTIONS = [
+  "Сколько стоит агент для салона?",
+  "Можно интегрировать с Bitrix24?",
+  "Как быстро сделаете?",
+  "Есть WhatsApp-бот?",
+];
+
 export default function Home() {
   const [tab, setTab] = useState(0);
   const [mouse, setMouse] = useState({ x: 0.5, y: 0.5 });
-  const [demoOpen, setDemoOpen] = useState(false);
   const c = CASES[tab];
 
   const onM = useCallback((e) => {
     setMouse({ x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight });
   }, []);
   useEffect(() => { window.addEventListener("mousemove", onM); return () => window.removeEventListener("mousemove", onM); }, [onM]);
+
+  const openChat = (text) => {
+    const btn = document.querySelector('.cw-btn');
+    if (btn) btn.click();
+    if (text) {
+      setTimeout(() => {
+        const inp = document.querySelector('.cw-inp');
+        if (inp) {
+          inp.value = text;
+          inp.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+      }, 320);
+    }
+  };
 
   const Phone = ({ chat }) => (
     <div className="phone-wrap">
@@ -375,7 +402,7 @@ export default function Home() {
         }
 
         /* ── STACK ── */
-        .stack-layout{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+        .stack-layout{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
         .stack-card{border-radius:18px;padding:24px;background:var(--bg-card);border:1px solid var(--border);transition:border-color .3s,box-shadow .3s}
         .stack-card:hover{border-color:var(--border-hover);box-shadow:0 6px 24px var(--accent-glow)}
         .stack-layer-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
@@ -385,7 +412,17 @@ export default function Home() {
         .stack-flow{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:32px;flex-wrap:wrap}
         .stack-flow-item{padding:7px 16px;border-radius:8px;font-size:12px;font-weight:600;border:1px solid rgba(74,108,247,0.15);background:rgba(74,108,247,0.04);color:var(--accent)}
         .stack-flow-arrow{color:var(--text-dim);font-size:16px}
-        @media(max-width:768px){.stack-layout{grid-template-columns:1fr}}
+        @media(max-width:900px){.stack-layout{grid-template-columns:1fr 1fr}}
+        @media(max-width:560px){.stack-layout{grid-template-columns:1fr}}
+
+        /* ── DELIVERY BLOCK (что получает бизнес) ── */
+        .delivery-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+        .delivery-card{border-radius:18px;padding:26px 24px;background:var(--bg-card);border:1px solid var(--border);transition:border-color .3s,box-shadow .3s;display:flex;gap:16px;align-items:flex-start}
+        .delivery-card:hover{border-color:var(--border-hover);box-shadow:0 6px 24px var(--accent-glow)}
+        .delivery-icon{width:40px;height:40px;border-radius:10px;background:rgba(74,108,247,0.08);border:1px solid rgba(74,108,247,0.14);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+        .delivery-title{font-size:14px;font-weight:700;color:var(--text-bright);margin-bottom:5px}
+        .delivery-desc{font-size:12.5px;color:var(--text-dim);line-height:1.55}
+        @media(max-width:640px){.delivery-grid{grid-template-columns:1fr}}
 
         /* ── DEMO BLOCK ── */
         .demo-block{border-radius:24px;padding:48px 44px;background:rgba(74,108,247,0.03);border:1px solid rgba(74,108,247,0.1);position:relative;overflow:hidden;text-align:center}
@@ -393,11 +430,14 @@ export default function Home() {
         .demo-block-badge{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border-radius:24px;border:1px solid rgba(52,211,153,0.2);background:rgba(52,211,153,0.05);font-size:11px;color:#34d399;font-weight:600;margin-bottom:16px;font-family:'JetBrains Mono',monospace;letter-spacing:1px}
         .demo-block-badge .live-dot{width:6px;height:6px;border-radius:50%;background:#34d399;box-shadow:0 0 8px rgba(52,211,153,0.6);animation:livePulse 1.8s ease-in-out infinite}
         .demo-block-h{font-size:clamp(20px,3vw,28px);font-weight:800;color:var(--text-bright);margin-bottom:10px;letter-spacing:-.5px}
-        .demo-block-p{font-size:14px;color:var(--text-dim);line-height:1.65;max-width:440px;margin:0 auto 28px}
+        .demo-block-p{font-size:14px;color:var(--text-dim);line-height:1.65;max-width:440px;margin:0 auto 20px}
+        .demo-quick{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+        .demo-quick-btn{padding:7px 16px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid rgba(74,108,247,0.2);background:rgba(74,108,247,0.05);color:var(--text-dim);font-family:inherit;transition:all .2s}
+        .demo-quick-btn:hover{border-color:rgba(74,108,247,0.4);color:var(--accent);background:rgba(74,108,247,0.1)}
         .demo-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
         @media(max-width:480px){.demo-block{padding:28px 18px}}
 
-        /* ── PHONE SHOWCASE (mobile visible) ── */
+        /* ── PHONE SHOWCASE (all screens) ── */
         .showcase-layout{display:grid;grid-template-columns:280px 1fr;gap:48px;align-items:center}
         .showcase-phone{width:280px;border-radius:36px;background:#0a0c14;border:1.5px solid rgba(255,255,255,0.05);padding:10px;box-shadow:0 32px 80px rgba(0,0,0,0.5);animation:float 7s ease-in-out infinite}
         .showcase-screen{background:#0e1018;border-radius:28px;padding:22px 12px 12px;min-height:400px;display:flex;flex-direction:column;gap:6px}
@@ -411,8 +451,8 @@ export default function Home() {
         .showcase-point-text{font-size:13px;color:var(--text-dim);line-height:1.5}
         .showcase-point-text strong{color:var(--text-bright);display:block;font-size:13px;margin-bottom:2px}
         @media(max-width:768px){
-          .showcase-layout{grid-template-columns:1fr}
-          .showcase-phone{width:100%;max-width:320px;margin:0 auto}
+          .showcase-layout{grid-template-columns:1fr;gap:28px}
+          .showcase-phone{width:100%;max-width:300px;margin:0 auto}
         }
 
         /* ── CALC ── */
@@ -676,7 +716,7 @@ export default function Home() {
           </S>
           <S d={160}>
             <div className="stack-flow">
-              {["Claude / OpenAI / YandexGPT", "→", "Telegram / WhatsApp / Сайт", "→", "Bitrix24 / amoCRM", "→", "Dashboard & Analytics"].map((item, i) => (
+              {["Claude / OpenAI / YandexGPT","→","Telegram / WhatsApp / Сайт","→","n8n / Make","→","Bitrix24 / amoCRM","→","Dashboard"].map((item, i) => (
                 item === "→"
                   ? <span key={i} className="stack-flow-arrow">→</span>
                   : <span key={i} className="stack-flow-item">{item}</span>
@@ -688,7 +728,7 @@ export default function Home() {
               {[
                 {t:"Подбираю модель под задачу",d:"Не всегда нужен самый дорогой стек. Оптимизирую под бюджет и требования."},
                 {t:"Можно начать с одного канала",d:"Сначала Telegram или сайт — потом масштабируем. Без переплаты за ненужное."},
-                {t:"Контур управления в подарок",d:"CRM, аналитика, история обращений. Вы видите каждый диалог и метрику."},
+                {t:"Контур управления в комплекте",d:"CRM, аналитика, история обращений. Вы видите каждый диалог и метрику."},
               ].map((item, i) => (
                 <div key={i} style={{borderRadius:14,padding:"18px 20px",background:"var(--bg-card)",border:"1px solid var(--border)"}}>
                   <div style={{fontSize:13,fontWeight:700,color:"var(--text-bright)",marginBottom:6}}>{item.t}</div>
@@ -712,7 +752,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SHOWCASE */}
+      {/* SHOWCASE — phone mock, visible on mobile too */}
       <section id="showcase" style={{position:"relative",zIndex:1,padding:"100px 0"}}>
         <div className="wrap">
           <S><div style={{marginBottom:48}}>
@@ -766,6 +806,39 @@ export default function Home() {
         </div>
       </section>
 
+      {/* DELIVERY — что получает бизнес после запуска */}
+      <section id="delivery" style={{position:"relative",zIndex:1,padding:"80px 0"}}>
+        <div className="wrap">
+          <S><div style={{marginBottom:40}}>
+            <div className="sec-label">После запуска</div>
+            <h2 className="sec-h2">Не просто бот —<br/>готовая инфраструктура</h2>
+            <p style={{fontSize:15,color:"var(--text-dim)",marginTop:14,maxWidth:520,lineHeight:1.65}}>Вы не привязаны ко мне. Всё, что я собираю — остаётся у вас: доступы, схемы, документация.</p>
+          </div></S>
+          <S d={80}>
+            <div className="delivery-grid">
+              {[
+                {icon:"🔑", t:"Все доступы ваши", d:"API-ключи, аккаунты, схемы автоматизации. Никакой зависимости от разработчика."},
+                {icon:"📖", t:"Инструкция по управлению", d:"Как вносить правки, как менять сценарии, как смотреть аналитику. Всё задокументировано."},
+                {icon:"📊", t:"Дашборд с метриками", d:"Лиды, конверсия, история диалогов, качество ответов — в реальном времени."},
+                {icon:"🔄", t:"Можно масштабировать", d:"Добавить канал, поменять модель ИИ, интегрировать новую CRM — без переделки с нуля."},
+                {icon:"🛡️", t:"Поддержка по желанию", d:"Не хотите вникать — беру на сопровождение. Хотите сами — передаю с объяснением каждого узла."},
+                {icon:"⚡", t:"Работает без вас", d:"Агент не болеет, не устаёт, не уходит в отпуск. Обрабатывает заявки пока вы занимаетесь бизнесом."},
+              ].map((item, i) => (
+                <S key={i} d={i*50}>
+                  <div className="delivery-card">
+                    <div className="delivery-icon">{item.icon}</div>
+                    <div>
+                      <div className="delivery-title">{item.t}</div>
+                      <div className="delivery-desc">{item.d}</div>
+                    </div>
+                  </div>
+                </S>
+              ))}
+            </div>
+          </S>
+        </div>
+      </section>
+
       {/* DEMO CTA BLOCK */}
       <section style={{position:"relative",zIndex:1,padding:"60px 0"}}>
         <div className="wrap">
@@ -773,12 +846,14 @@ export default function Home() {
             <div className="demo-block">
               <div className="demo-block-badge"><span className="live-dot"/>Ассистент онлайн прямо сейчас</div>
               <h2 className="demo-block-h">Спросите ассистента прямо здесь</h2>
-              <p className="demo-block-p">Нажмите на иконку чата в правом нижнем углу — это реальный ИИ-ассистент. Спросите что угодно про автоматизацию, интеграции или цены.</p>
+              <p className="demo-block-p">Нажмите на один из вопросов или откройте чат — это реальный ИИ-ассистент. Спросите что угодно про автоматизацию, интеграции или цены.</p>
+              <div className="demo-quick">
+                {QUICK_QUESTIONS.map((q, i) => (
+                  <button key={i} className="demo-quick-btn" onClick={() => openChat(q)}>{q}</button>
+                ))}
+              </div>
               <div className="demo-btns">
-                <button className="btn-p" onClick={() => {
-                  const btn = document.querySelector('.cw-btn');
-                  if (btn) btn.click();
-                }}>
+                <button className="btn-p" onClick={() => openChat()}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
                   Открыть чат
                 </button>
@@ -827,7 +902,7 @@ export default function Home() {
         <div className="wrap">
           <S><div style={{marginBottom:36}}>
             <div className="sec-label">Стандарт</div>
-            <h2 className="sec-h2">Что получает каждый клиент</h2>
+            <h2 className="sec-h2">Почему со мной спокойно</h2>
           </div></S>
           <div className="trust-grid">
             {TRUST.map((t,i)=>(

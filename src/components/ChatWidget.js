@@ -11,6 +11,7 @@ export default function ChatWidget() {
   const [hint, setHint] = useState(false);
   const [hintClosed, setHintClosed] = useState(false);
   const endRef = useRef(null);
+  const inpRef = useRef(null);
 
   useEffect(() => { endRef.current?.scrollIntoView({ behavior: "smooth" }); }, [msgs, loading]);
 
@@ -22,15 +23,22 @@ export default function ChatWidget() {
     return () => clearTimeout(t);
   }, [open, hintClosed]);
 
+  // Expose input ref via class для внешних quick-starters
+  useEffect(() => {
+    if (inpRef.current) {
+      inpRef.current.className = "cw-inp";
+    }
+  }, []);
+
   const closeHint = (e) => {
     e?.stopPropagation();
     setHint(false);
     setHintClosed(true);
   };
 
-  const send = async () => {
-    if (!inp.trim() || loading) return;
-    const text = inp.trim();
+  const send = async (overrideText) => {
+    const text = (overrideText || inp).trim();
+    if (!text || loading) return;
     setInp("");
     const next = [...msgs, { role: "user", content: text }];
     setMsgs(next);
@@ -48,6 +56,21 @@ export default function ChatWidget() {
     }
     setLoading(false);
   };
+
+  // Listen for external fill events (quick-starters from page)
+  useEffect(() => {
+    const handler = (e) => {
+      if (e.detail?.text) {
+        setOpen(true);
+        setTimeout(() => {
+          setInp(e.detail.text);
+          setTimeout(() => send(e.detail.text), 100);
+        }, 300);
+      }
+    };
+    window.addEventListener('agento:ask', handler);
+    return () => window.removeEventListener('agento:ask', handler);
+  }, [msgs, loading]);
 
   return (
     <>
@@ -121,10 +144,15 @@ export default function ChatWidget() {
               <div ref={endRef}/>
             </div>
             <div style={{padding:"10px 14px",borderTop:"1px solid rgba(255,255,255,0.04)",display:"flex",gap:8}}>
-              <input value={inp} onChange={e=>setInp(e.target.value)} onKeyDown={e=>{if(e.key==="Enter")send()}}
+              <input
+                ref={inpRef}
+                value={inp}
+                onChange={e=>setInp(e.target.value)}
+                onKeyDown={e=>{if(e.key==="Enter")send()}}
                 placeholder="Задайте вопрос..."
-                style={{flex:1,background:"#0c0e18",border:"1px solid rgba(255,255,255,0.04)",borderRadius:10,padding:"10px 12px",color:"var(--text)",fontSize:14,outline:"none",fontFamily:"inherit"}}/>
-              <button onClick={send} disabled={loading}
+                style={{flex:1,background:"#0c0e18",border:"1px solid rgba(255,255,255,0.04)",borderRadius:10,padding:"10px 12px",color:"var(--text)",fontSize:14,outline:"none",fontFamily:"inherit"}}
+              />
+              <button onClick={()=>send()} disabled={loading}
                 style={{width:38,height:38,borderRadius:10,background:"linear-gradient(135deg,#4a6cf7,#7c5ce6)",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",opacity:loading?.4:1,transition:"opacity .2s",flexShrink:0}}>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
               </button>
