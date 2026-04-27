@@ -358,7 +358,7 @@ export default function Home() {
             <div className="orb" style={{bottom:-40,left:-40,width:160,height:160}}/>
             <h2 style={{fontSize:"clamp(22px,3.5vw,32px)",fontWeight:700,color:"var(--text-bright)",marginBottom:14,letterSpacing:-.5,position:"relative"}}>Готовы запустить ИИ-агента?</h2>
             <p style={{fontSize:15,color:"var(--text-dim)",marginBottom:32,position:"relative",maxWidth:400,margin:"0 auto 32px",lineHeight:1.6}}>Напишите — обсудим проект, покажу как это будет работать у вас. Стоимость договорная.</p>
-            <a href={TG} target="_blank" rel="noopener noreferrer" className="btn-p" style={{position:"relative"}}>Написать Арине</a>
+            <a href={TG} target="_blank" rel="noopener noreferrer" className="btn-p" style={{position:"relative"}}>Написать</a>
             <p style={{fontSize:12,color:"var(--text-dim)",marginTop:16,position:"relative",opacity:.6}}>@arinashrr / Telegram</p>
           </div></S>
         </div>
