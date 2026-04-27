@@ -8,9 +8,25 @@ export default function ChatWidget() {
   ]);
   const [inp, setInp] = useState("");
   const [loading, setLoading] = useState(false);
+  const [hint, setHint] = useState(false);
+  const [hintClosed, setHintClosed] = useState(false);
   const endRef = useRef(null);
 
   useEffect(() => { endRef.current?.scrollIntoView({ behavior: "smooth" }); }, [msgs, loading]);
+
+  // Всплывающая подсказка через 2.5 сек
+  useEffect(() => {
+    const t = setTimeout(() => {
+      if (!open && !hintClosed) setHint(true);
+    }, 2500);
+    return () => clearTimeout(t);
+  }, [open, hintClosed]);
+
+  const closeHint = (e) => {
+    e?.stopPropagation();
+    setHint(false);
+    setHintClosed(true);
+  };
 
   const send = async () => {
     if (!inp.trim() || loading) return;
@@ -36,21 +52,52 @@ export default function ChatWidget() {
   return (
     <>
       <style>{`
-        .cw-wrap{position:fixed;bottom:20px;right:20px;z-index:9999}
-        .cw-win{width:360px;height:480px;border-radius:20px;display:flex;flex-direction:column;background:rgba(10,12,20,0.95);backdrop-filter:blur(40px);border:1px solid rgba(255,255,255,0.05);box-shadow:0 32px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.02) inset;margin-bottom:14px;overflow:hidden}
-        .cw-btn{width:56px;height:56px;border-radius:16px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-left:auto;transition:transform .2s,box-shadow .2s;background:linear-gradient(135deg,#4a6cf7,#7c5ce6);box-shadow:0 6px 24px rgba(74,108,247,0.25)}
+        .cw-wrap{position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+        .cw-win{width:360px;height:480px;border-radius:20px;display:flex;flex-direction:column;background:rgba(10,12,20,0.95);backdrop-filter:blur(40px);border:1px solid rgba(255,255,255,0.05);box-shadow:0 32px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.02) inset;overflow:hidden}
+        .cw-btn{position:relative;width:56px;height:56px;border-radius:16px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s;background:linear-gradient(135deg,#4a6cf7,#7c5ce6);box-shadow:0 6px 24px rgba(74,108,247,0.25)}
         .cw-btn:hover{transform:scale(1.06);box-shadow:0 8px 32px rgba(74,108,247,0.35)}
+        .cw-btn::before{content:"";position:absolute;inset:0;border-radius:16px;background:linear-gradient(135deg,#4a6cf7,#7c5ce6);opacity:.55;z-index:-1;animation:cwPulse 2.4s ease-out infinite;pointer-events:none}
+        .cw-btn.is-open::before{display:none}
+        @keyframes cwPulse{
+          0%{transform:scale(1);opacity:.55}
+          100%{transform:scale(1.55);opacity:0}
+        }
+
+        .cw-hint{
+          position:relative;
+          background:#151820;color:#fff;
+          border:1px solid rgba(255,255,255,0.08);
+          padding:12px 32px 12px 14px;
+          border-radius:14px 14px 4px 14px;
+          font-size:13px;line-height:1.45;max-width:240px;
+          box-shadow:0 12px 32px rgba(0,0,0,0.45);
+          animation:cwHintIn .45s cubic-bezier(.22,1,.36,1);
+          cursor:pointer;
+        }
+        .cw-hint b{background:linear-gradient(135deg,#638cff,#9f7afa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .cw-hint-x{
+          position:absolute;top:6px;right:8px;background:none;border:none;
+          color:rgba(255,255,255,0.4);cursor:pointer;font-size:14px;line-height:1;padding:2px
+        }
+        .cw-hint-x:hover{color:#fff}
+        @keyframes cwHintIn{
+          from{opacity:0;transform:translateY(8px) scale(.92)}
+          to{opacity:1;transform:none}
+        }
+
         .cw-msg-b{padding:10px 14px;border-radius:14px 14px 14px 2px;background:#12141f;border:1px solid rgba(255,255,255,0.03);font-size:14px;line-height:1.55;max-width:88%;color:var(--text);white-space:pre-wrap}
         .cw-msg-u{padding:10px 14px;border-radius:14px 14px 2px 14px;background:rgba(74,108,247,0.1);border:1px solid rgba(74,108,247,0.1);font-size:14px;line-height:1.55;max-width:88%;color:#c4d0ff;white-space:pre-wrap}
         .cw-dot{width:4px;height:4px;border-radius:50%;background:var(--accent);animation:typing 1.4s infinite}
         .cw-dot:nth-child(2){animation-delay:.2s}
         .cw-dot:nth-child(3){animation-delay:.4s}
+
         @media(max-width:480px){
-          .cw-wrap{bottom:12px;right:12px;left:12px}
+          .cw-wrap{bottom:12px;right:12px;left:12px;align-items:flex-end}
           .cw-win{width:100%;height:70vh}
-          .cw-btn{margin-left:auto}
+          .cw-hint{max-width:80%}
         }
       `}</style>
+
       <div className="cw-wrap">
         {open && (
           <div className="cw-win">
@@ -84,7 +131,19 @@ export default function ChatWidget() {
             </div>
           </div>
         )}
-        <button className="cw-btn" onClick={()=>setOpen(!open)}>
+
+        {/* Всплывающая подсказка */}
+        {hint && !open && (
+          <div className="cw-hint" onClick={()=>{setOpen(true);setHint(false);setHintClosed(true);}}>
+            <button className="cw-hint-x" onClick={closeHint}>×</button>
+            👋 Привет! Я <b>ИИ-ассистент</b>. Спросите про автоматизацию — отвечу за пару секунд.
+          </div>
+        )}
+
+        <button
+          className={`cw-btn${open?" is-open":""}`}
+          onClick={()=>{setOpen(!open);setHint(false);setHintClosed(true);}}
+        >
           {open
             ?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             :<svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>}
