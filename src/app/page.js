@@ -262,7 +262,7 @@ export default function Home() {
       <section className="hero">
         <div className="wrap hero-grid">
           <div>
-            <S><div className="hero-badge"><span className="dot"/>Свободна сейчас / от 3 дней</div></S>
+            <S><div className="hero-badge"><span className="dot"/>от 3 дней</div></S>
             <S d={80}><h1 className="hero-h1">ИИ-агент продаёт<br/><span className="grad">пока вы спите</span></h1></S>
             <S d={150}><p className="hero-p">Клиенты уходят не потому что у вас плохой продукт — конкурент ответил быстрее. Агент отвечает за 2 секунды. Днём и ночью. Без выходных.</p></S>
             <S d={220}><div className="hero-btns">
