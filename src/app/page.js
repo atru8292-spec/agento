@@ -356,8 +356,8 @@ export default function Home() {
         .case-layout{display:grid;grid-template-columns:1fr 280px;gap:40px;align-items:start}
         .case-title{font-size:clamp(22px,3vw,30px);font-weight:700;color:var(--text-bright);line-height:1.2;margin-bottom:14px;letter-spacing:-.5px}
         .case-desc{font-size:15px;color:var(--text-dim);line-height:1.65;margin-bottom:28px;max-width:500px}
-        .case-cover{margin-bottom:24px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);background:#0e1018}
-        .case-cover img{width:100%;display:block}
+      .case-cover{margin-bottom:24px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);background:#0e1018;max-width:380px}
+.case-cover img{width:100%;display:block;max-height:200px;object-fit:cover}
         .case-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px}
         .case-metric{text-align:center;padding:20px 12px;border-radius:16px;background:rgba(74,108,247,0.03);border:1px solid rgba(74,108,247,0.06)}
         .case-metric-val{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;background:linear-gradient(135deg,#638cff,#9f7afa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
