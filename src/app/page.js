@@ -6,6 +6,7 @@ const TG = "https://t.me/arinashrr";
 const CRM = "https://speakup-crm.vercel.app";
 const DEMO_BOT = "https://t.me/sunsh22bot";
 const N8N_IMG = "https://i.ibb.co/VYB0mrTq/2026-04-27-10-43-09.png";
+const SCHOOL_IMG = "https://i.ibb.co/nqKx1m0K/2cef8048-a021-4002-99b0-887ea678cc28.png";
 
 /* ── Scroll reveal ── */
 function S({ children, d = 0, style = {} }) {
@@ -83,6 +84,20 @@ const CASES = [
   },
 ];
 
+/* ── PROBLEM data — почему «оставьте номер» больше не работает ── */
+const PROBLEM_OLD = [
+  { icon: "📵", t: "Не берут трубку", d: "Спам и мошенники приучили людей не отвечать на незнакомые номера. Каждый второй звонок уходит в гудки." },
+  { icon: "⏳", t: "Менеджер не успевает", d: "Заявка пришла в 22:00 или в обед — клиент ждёт час, два, до завтра. К утру он уже у конкурента." },
+  { icon: "🤔", t: "«Я просто спросить»", d: "Менеджер тратит 20 минут на праздные вопросы. На реального клиента сил уже не остаётся." },
+];
+
+const PROBLEM_NEW = [
+  { icon: "💬", t: "Отвечает в чате — не звонит", d: "Клиенту не нужно поднимать трубку. Просто переписка — комфортно и без давления. Барьер исчезает." },
+  { icon: "⚡", t: "Реакция за 2 секунды", d: "Пока интерес горячий — клиент уже получил ответ. Не успевает уйти к конкуренту, не успевает передумать." },
+  { icon: "🎯", t: "Сам отдаёт контакт", d: "Когда клиент уже получил консультацию и понял, что ему подходит — он сам охотно оставляет номер. Без сопротивления." },
+  { icon: "🧹", t: "Фильтрует «просто спросить»", d: "Бот спокойно работает с любопытными. Менеджеру передаются только те, кто реально готов покупать." },
+];
+
 const FEATURES = [
   { t: "Консультирует круглосуточно", d: "Знает всё о продукте, ценах, условиях. Отвечает мгновенно — от наличия до доставки.", w: true },
   { t: "Квалифицирует лиды", d: "Собирает имя, потребность, бюджет, контакт. Передаёт только тех, кто готов." },
@@ -108,41 +123,14 @@ const TRUST = [
   { icon: "📊", t: "С результатом", d: "Ориентируюсь на метрики: скорость ответа, количество отвеченных заявок, качество диалогов." },
 ];
 
-/* ── Stack data ── */
 const STACK_LAYERS = [
-  {
-    label: "Модель ИИ",
-    color: "#4a6cf7",
-    items: ["Claude", "OpenAI", "YandexGPT", "GigaChat"],
-    desc: "Подбираю под задачу и бюджет. Не навязываю один инструмент.",
-  },
-  {
-    label: "Каналы",
-    color: "#7c5ce6",
-    items: ["Telegram", "WhatsApp", "Avito", "Instagram", "Сайт"],
-    desc: "Любой мессенджер или чат на сайте — подключаю туда, где ваши клиенты.",
-  },
-  {
-    label: "CRM",
-    color: "#00b4d8",
-    items: ["Bitrix24", "amoCRM", "Web CRM"],
-    desc: "Встраиваюсь в вашу воронку или собираю собственную веб-панель.",
-  },
-  {
-    label: "Автоматизация",
-    color: "#f59e42",
-    items: ["n8n", "Make", "Webhooks", "API"],
-    desc: "Связываю всё в единый поток: агент → CRM → уведомление → аналитика.",
-  },
-  {
-    label: "Аналитика",
-    color: "#34d399",
-    items: ["Дашборд", "История диалогов", "Воронка лидов", "Метрики"],
-    desc: "Полный контур управления: видите что происходит, в реальном времени.",
-  },
+  { label: "Модель ИИ", color: "#4a6cf7", items: ["Claude", "OpenAI", "YandexGPT", "GigaChat"], desc: "Подбираю под задачу и бюджет. Не навязываю один инструмент." },
+  { label: "Каналы", color: "#7c5ce6", items: ["Telegram", "WhatsApp", "Avito", "Instagram", "Сайт"], desc: "Любой мессенджер или чат на сайте — подключаю туда, где ваши клиенты." },
+  { label: "CRM", color: "#00b4d8", items: ["Bitrix24", "amoCRM", "Web CRM"], desc: "Встраиваюсь в вашу воронку или собираю собственную веб-панель." },
+  { label: "Автоматизация", color: "#f59e42", items: ["n8n", "Make", "Webhooks", "API"], desc: "Связываю всё в единый поток: агент → CRM → уведомление → аналитика." },
+  { label: "Аналитика", color: "#34d399", items: ["Дашборд", "История диалогов", "Воронка лидов", "Метрики"], desc: "Полный контур управления: видите что происходит, в реальном времени." },
 ];
 
-/* ── Timeline data (1 неделя) ── */
 const TIMELINE = [
   { day: "День 1", t: "Разбор задачи", d: "Кастдев за 20 минут или перепиской: выясняю бизнес-процесс, болевые точки, ожидания. Вы уходите с конкретным планом." },
   { day: "День 2", t: "Живое демо", d: "Рабочий прототип под ваш бизнес — не скриншот, а реальный бот. Трогаете, даёте обратную связь." },
@@ -152,7 +140,6 @@ const TIMELINE = [
   { day: "День 7", t: "Поддержка", d: "Мониторинг, правки по диалогам, масштабирование. Или передача всех доступов — на ваш выбор." },
 ];
 
-/* ── Calc data ── */
 const CALC_PRESETS = [
   { label: "Малый бизнес", leads: 30, hours: 2, salary: 50000 },
   { label: "Средний бизнес", leads: 100, hours: 4, salary: 80000 },
@@ -220,7 +207,6 @@ function Calculator() {
   );
 }
 
-/* ── Quick starters for demo block ── */
 const QUICK_QUESTIONS = [
   "Сколько стоит агент для салона?",
   "Можно интегрировать с Bitrix24?",
@@ -302,7 +288,7 @@ export default function Home() {
         .hero-p{font-size:16px;color:var(--text-dim);line-height:1.65;margin-bottom:32px;max-width:440px}
         .hero-btns{display:flex;gap:10px;flex-wrap:wrap}
         .btn-p{display:inline-flex;align-items:center;gap:6px;padding:14px 30px;border-radius:12px;background:linear-gradient(135deg,#4a6cf7,#3b5de7);color:#fff;font-weight:600;font-size:14px;text-decoration:none;border:none;cursor:pointer;transition:all .25s;box-shadow:0 4px 16px rgba(74,108,247,0.2);font-family:inherit}
-              .btn-p:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(74,108,247,0.3)}
+        .btn-p:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(74,108,247,0.3)}
         .btn-s{display:inline-flex;align-items:center;gap:6px;padding:14px 30px;border-radius:12px;background:rgba(255,255,255,0.03);color:var(--text);font-weight:500;font-size:14px;text-decoration:none;border:1px solid rgba(255,255,255,0.06);cursor:pointer;transition:all .25s;font-family:inherit}
         .btn-s:hover{border-color:var(--border-hover);color:var(--text-bright)}
         .hero-stats{display:flex;gap:40px;margin-top:48px;flex-wrap:wrap}
@@ -328,6 +314,29 @@ export default function Home() {
         .sec-label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);font-weight:500;text-transform:uppercase;letter-spacing:3px;margin-bottom:12px}
         .sec-h2{font-size:clamp(24px,3.5vw,40px);font-weight:800;letter-spacing:-1px;color:var(--text-bright);margin-bottom:0}
 
+        /* ── PROBLEM block ── */
+        .problem-intro{font-size:16px;color:var(--text);line-height:1.7;max-width:680px;margin-top:14px}
+        .problem-intro strong{color:var(--text-bright);font-weight:600}
+        .problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:48px}
+        .problem-col-label{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
+        .problem-col-old .problem-col-label{color:#ef4444}
+        .problem-col-new .problem-col-label{color:#34d399}
+        .problem-card{border-radius:16px;padding:20px 22px;border:1px solid var(--border);margin-bottom:10px;transition:border-color .25s;display:flex;gap:14px;align-items:flex-start}
+        .problem-card-old{background:rgba(239,68,68,0.025);border-color:rgba(239,68,68,0.08)}
+        .problem-card-old:hover{border-color:rgba(239,68,68,0.18)}
+        .problem-card-new{background:rgba(52,211,153,0.025);border-color:rgba(52,211,153,0.08)}
+        .problem-card-new:hover{border-color:rgba(52,211,153,0.18)}
+        .problem-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
+        .problem-card-old .problem-icon{background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.12)}
+        .problem-card-new .problem-icon{background:rgba(52,211,153,0.06);border:1px solid rgba(52,211,153,0.12)}
+        .problem-t{font-size:14px;font-weight:700;color:var(--text-bright);margin-bottom:4px}
+        .problem-d{font-size:13px;color:var(--text-dim);line-height:1.55}
+        .problem-vs{display:flex;align-items:center;justify-content:center;gap:10px;margin:32px 0 0;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);letter-spacing:2px;text-transform:uppercase}
+        .problem-vs::before,.problem-vs::after{content:"";flex:1;height:1px;background:rgba(255,255,255,0.05);max-width:120px}
+        .problem-conclusion{margin-top:36px;padding:24px 28px;border-radius:16px;background:rgba(74,108,247,0.04);border:1px solid rgba(74,108,247,0.12);font-size:15px;color:var(--text);line-height:1.65;text-align:center}
+        .problem-conclusion strong{color:var(--text-bright);font-weight:700}
+        @media(max-width:768px){.problem-grid{grid-template-columns:1fr;gap:8px}}
+
         /* Steps */
         .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
         .step{border-radius:20px;padding:32px 28px;background:var(--bg-card);backdrop-filter:blur(20px);border:1px solid var(--border);transition:border-color .3s,box-shadow .3s}
@@ -346,6 +355,8 @@ export default function Home() {
         .case-layout{display:grid;grid-template-columns:1fr 280px;gap:40px;align-items:start}
         .case-title{font-size:clamp(22px,3vw,30px);font-weight:700;color:var(--text-bright);line-height:1.2;margin-bottom:14px;letter-spacing:-.5px}
         .case-desc{font-size:15px;color:var(--text-dim);line-height:1.65;margin-bottom:28px;max-width:500px}
+        .case-cover{margin-bottom:24px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);background:#0e1018}
+        .case-cover img{width:100%;display:block}
         .case-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px}
         .case-metric{text-align:center;padding:20px 12px;border-radius:16px;background:rgba(74,108,247,0.03);border:1px solid rgba(74,108,247,0.06)}
         .case-metric-val{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;background:linear-gradient(135deg,#638cff,#9f7afa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
@@ -384,7 +395,7 @@ export default function Home() {
         .wf-img-wrap img{width:100%;display:block;object-fit:cover}
         @media(max-width:768px){.wf-grid{grid-template-columns:1fr}}
 
-        /* ── TIMELINE ── */
+        /* TIMELINE */
         .tl-wrap{position:relative;display:flex;flex-direction:column;gap:0}
         .tl-wrap::before{content:"";position:absolute;left:52px;top:12px;bottom:12px;width:1px;background:linear-gradient(180deg,rgba(74,108,247,0.3),rgba(124,92,230,0.15));pointer-events:none}
         .tl-item{display:grid;grid-template-columns:104px 1fr;gap:24px;align-items:flex-start;padding:16px 0}
@@ -401,7 +412,7 @@ export default function Home() {
           .tl-day{font-size:9px}
         }
 
-        /* ── STACK ── */
+        /* STACK */
         .stack-layout{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
         .stack-card{border-radius:18px;padding:24px;background:var(--bg-card);border:1px solid var(--border);transition:border-color .3s,box-shadow .3s}
         .stack-card:hover{border-color:var(--border-hover);box-shadow:0 6px 24px var(--accent-glow)}
@@ -415,7 +426,7 @@ export default function Home() {
         @media(max-width:900px){.stack-layout{grid-template-columns:1fr 1fr}}
         @media(max-width:560px){.stack-layout{grid-template-columns:1fr}}
 
-        /* ── DELIVERY BLOCK (что получает бизнес) ── */
+        /* DELIVERY */
         .delivery-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
         .delivery-card{border-radius:18px;padding:26px 24px;background:var(--bg-card);border:1px solid var(--border);transition:border-color .3s,box-shadow .3s;display:flex;gap:16px;align-items:flex-start}
         .delivery-card:hover{border-color:var(--border-hover);box-shadow:0 6px 24px var(--accent-glow)}
@@ -424,11 +435,11 @@ export default function Home() {
         .delivery-desc{font-size:12.5px;color:var(--text-dim);line-height:1.55}
         @media(max-width:640px){.delivery-grid{grid-template-columns:1fr}}
 
-        /* ── DEMO BLOCK ── */
+        /* DEMO BLOCK */
         .demo-block{border-radius:24px;padding:48px 44px;background:rgba(74,108,247,0.03);border:1px solid rgba(74,108,247,0.1);position:relative;overflow:hidden;text-align:center}
         .demo-block::before{content:"";position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(74,108,247,0.07),transparent 70%);pointer-events:none}
         .demo-block-badge{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border-radius:24px;border:1px solid rgba(52,211,153,0.2);background:rgba(52,211,153,0.05);font-size:11px;color:#34d399;font-weight:600;margin-bottom:16px;font-family:'JetBrains Mono',monospace;letter-spacing:1px}
-        .demo-block-badge .live-dot{width:6px;height:6px;border-radius:50%;background:#34d399;box-shadow:0 0 8px rgba(52,211,153,0.6);animation:livePulse 1.8s ease-in-out infinite}
+              .demo-block-badge .live-dot{width:6px;height:6px;border-radius:50%;background:#34d399;box-shadow:0 0 8px rgba(52,211,153,0.6);animation:livePulse 1.8s ease-in-out infinite}
         .demo-block-h{font-size:clamp(20px,3vw,28px);font-weight:800;color:var(--text-bright);margin-bottom:10px;letter-spacing:-.5px}
         .demo-block-p{font-size:14px;color:var(--text-dim);line-height:1.65;max-width:440px;margin:0 auto 20px}
         .demo-quick{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
@@ -437,7 +448,7 @@ export default function Home() {
         .demo-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
         @media(max-width:480px){.demo-block{padding:28px 18px}}
 
-        /* ── PHONE SHOWCASE (all screens) ── */
+        /* PHONE SHOWCASE */
         .showcase-layout{display:grid;grid-template-columns:280px 1fr;gap:48px;align-items:center}
         .showcase-phone{width:280px;border-radius:36px;background:#0a0c14;border:1.5px solid rgba(255,255,255,0.05);padding:10px;box-shadow:0 32px 80px rgba(0,0,0,0.5);animation:float 7s ease-in-out infinite}
         .showcase-screen{background:#0e1018;border-radius:28px;padding:22px 12px 12px;min-height:400px;display:flex;flex-direction:column;gap:6px}
@@ -455,14 +466,13 @@ export default function Home() {
           .showcase-phone{width:100%;max-width:300px;margin:0 auto}
         }
 
-        /* ── CALC ── */
+        /* CALC */
         .calc-wrap{background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:32px 28px}
         .calc-presets{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
         .calc-preset{padding:7px 18px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,0.07);background:transparent;color:var(--text-dim);font-family:inherit;transition:all .2s}
         .calc-preset.active{background:rgba(74,108,247,0.1);border-color:rgba(74,108,247,0.3);color:var(--accent)}
         .calc-preset:hover{border-color:rgba(255,255,255,0.12);color:var(--text)}
         .calc-sliders{display:flex;flex-direction:column;gap:20px;margin-bottom:28px}
-        .calc-row{}
         .calc-label{font-size:13px;color:var(--text-dim);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
         .calc-val{font-family:'JetBrains Mono',monospace;color:var(--accent);font-weight:700}
         .calc-slider{width:100%;-webkit-appearance:none;appearance:none;height:3px;border-radius:2px;background:rgba(255,255,255,0.08);outline:none;cursor:pointer}
@@ -485,7 +495,7 @@ export default function Home() {
         .fz-card::before{content:"";position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(74,108,247,0.07),transparent 70%);pointer-events:none}
         .fz-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
         .fz-badge{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border-radius:24px;border:1px solid rgba(74,108,247,0.15);background:rgba(74,108,247,0.06);font-size:11px;color:var(--accent);font-weight:600;margin-bottom:20px;font-family:'JetBrains Mono',monospace;letter-spacing:1px}
-               .fz-h{font-size:clamp(20px,2.5vw,30px);font-weight:800;color:var(--text-bright);letter-spacing:-.5px;margin-bottom:14px;line-height:1.2}
+        .fz-h{font-size:clamp(20px,2.5vw,30px);font-weight:800;color:var(--text-bright);letter-spacing:-.5px;margin-bottom:14px;line-height:1.2}
         .fz-p{font-size:14px;color:var(--text-dim);line-height:1.7;margin-bottom:0}
         .fz-points{display:flex;flex-direction:column;gap:14px}
         .fz-point{display:flex;gap:12px;align-items:flex-start}
@@ -513,7 +523,6 @@ export default function Home() {
         }
 
         @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-        @keyframes typing{0%,80%,100%{transform:scale(0.6);opacity:.4}40%{transform:scale(1);opacity:1}}
       `}</style>
 
       {/* BG */}
@@ -531,7 +540,7 @@ export default function Home() {
             <span className="nav-name">agento</span>
           </div>
           <div className="nav-links">
-            <a href="#workflow" className="nav-link">Процесс</a>
+            <a href="#problem" className="nav-link">Зачем</a>
             <a href="#cases" className="nav-link">Кейсы</a>
             <a href="#stack" className="nav-link">Стек</a>
             <a href="#calc" className="nav-link">Калькулятор</a>
@@ -541,7 +550,7 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* HERO */}
+      {/* 1. HERO — крючок */}
       <section className="hero">
         <div className="wrap hero-grid">
           <div>
@@ -550,7 +559,7 @@ export default function Home() {
             <S d={150}><p className="hero-p">Клиенты уходят не потому что у вас плохой продукт — конкурент ответил быстрее. Агент отвечает за 2 секунды. Днём и ночью. Без выходных.</p></S>
             <S d={220}><div className="hero-btns">
               <a href={TG} target="_blank" rel="noopener noreferrer" className="btn-p">Обсудить проект</a>
-              <a href="#cases" className="btn-s">Как это работает</a>
+              <a href="#problem" className="btn-s">Почему это работает</a>
             </div></S>
             <S d={320}><div className="hero-stats">
               {[{v:"2",s:" сек",l:"ответ агента"},{v:"24",s:"/7",l:"без выходных"},{v:"0",s:"",l:"потерянных заявок"}].map((m,i)=>(
@@ -562,65 +571,61 @@ export default function Home() {
         </div>
       </section>
 
-      {/* WORKFLOW */}
-      <section id="workflow" style={{position:"relative",zIndex:1,padding:"100px 0"}}>
+      {/* 2. PROBLEM — почему «оставьте номер» больше не работает */}
+      <section id="problem" style={{position:"relative",zIndex:1,padding:"100px 0"}}>
         <div className="wrap">
-          <S><div style={{marginBottom:48}}>
-            <div className="sec-label">Как я работаю</div>
-            <h2 className="sec-h2">Шесть шагов от идеи<br/>до работающего агента</h2>
-            <p style={{fontSize:15,color:"var(--text-dim)",marginTop:14,maxWidth:520,lineHeight:1.65}}>Никаких сюрпризов. Каждый этап согласован — вы знаете, что происходит и когда.</p>
-          </div></S>
-          <div className="wf-grid">
-            {WORKFLOW.map((w, i) => (
-              <S key={i} d={i * 80}>
-                <div className={`wf-card${i % 2 === 0 ? " wf-card-accent" : ""}`}>
-                  <div className="wf-num">{w.n}</div>
-                  <span className="wf-icon">{w.icon}</span>
-                  <div className="wf-title">{w.t}</div>
-                  <div className="wf-desc">{w.d}</div>
-                  {w.img && (
-                    <div className="wf-img-wrap">
-                      <img src={N8N_IMG} alt="Схема автоматизации в n8n" loading="lazy" width="600" height="300" />
-                    </div>
-                  )}
-                </div>
-              </S>
-            ))}
-          </div>
-        </div>
-      </section>
+          <S>
+            <div style={{marginBottom:0}}>
+              <div className="sec-label">Что изменилось</div>
+              <h2 className="sec-h2">Почему «оставьте номер»<br/>больше не работает</h2>
+              <p className="problem-intro">Поведение клиентов изменилось. <strong>Спам-звонки и мошенники</strong> приучили людей не брать трубку с незнакомых номеров. <strong>Заявки приходят круглосуточно</strong>, а менеджер физически не успевает отвечать оперативно. И пока он перезванивает — клиент уже ушёл к конкуренту, который ответил мгновенно.</p>
+            </div>
+          </S>
 
-      {/* TIMELINE */}
-      <section id="timeline" style={{position:"relative",zIndex:1,padding:"100px 0"}}>
-        <div className="wrap">
-          <S><div style={{marginBottom:48}}>
-            <div className="sec-label">Таймлайн</div>
-            <h2 className="sec-h2">От первого звонка<br/>до запуска — 7 дней</h2>
-            <p style={{fontSize:15,color:"var(--text-dim)",marginTop:14,maxWidth:500,lineHeight:1.65}}>Конкретные сроки для каждого шага. Никакого «мы уточним позже».</p>
-          </div></S>
-          <S d={80}>
-            <div className="tl-wrap">
-              {TIMELINE.map((item, i) => (
-                <div key={i} className="tl-item">
-                  <div className="tl-day-wrap">
-                    <div className="tl-dot" />
-                    <div className="tl-day">{item.day}</div>
+          <div className="problem-grid">
+            <div className="problem-col-old">
+              <S d={60}><div className="problem-col-label">⚠ Старая модель</div></S>
+              {PROBLEM_OLD.map((p, i) => (
+                <S key={i} d={120 + i * 70}>
+                  <div className="problem-card problem-card-old">
+                    <div className="problem-icon">{p.icon}</div>
+                    <div>
+                      <div className="problem-t">{p.t}</div>
+                      <div className="problem-d">{p.d}</div>
+                    </div>
                   </div>
-                  <div className="tl-card">
-                    <div className="tl-title">{item.t}</div>
-                    <div className="tl-desc">{item.d}</div>
-                  </div>
-                </div>
+                </S>
               ))}
+            </div>
+
+            <div className="problem-col-new">
+              <S d={60}><div className="problem-col-label">✓ Как делает агент</div></S>
+              {PROBLEM_NEW.map((p, i) => (
+                <S key={i} d={120 + i * 70}>
+                  <div className="problem-card problem-card-new">
+                    <div className="problem-icon">{p.icon}</div>
+                    <div>
+                      <div className="problem-t">{p.t}</div>
+                      <div className="problem-d">{p.d}</div>
+                    </div>
+                  </div>
+                </S>
+              ))}
+            </div>
+          </div>
+
+          <S d={200}>
+            <div className="problem-conclusion">
+              Конверсия растёт не потому что бот «продаёт лучше». А потому что <strong>клиент получает ответ в момент интереса</strong>, не чувствует давления звонка и сам отдаёт контакт, когда уже понял ценность. А менеджер работает только с теми, кто реально готов покупать.
             </div>
           </S>
         </div>
       </section>
 
-      {/* HOW */}
+      {/* 3. HOW — три шага до автопилота */}
       <section id="how" style={{position:"relative",zIndex:1,padding:"100px 0"}}>
         <div className="wrap">
-          <S><div style={{marginBottom:48}}><div className="sec-label">Процесс</div><h2 className="sec-h2">Три шага до автопилота</h2></div></S>
+          <S><div style={{marginBottom:48}}><div className="sec-label">Как это работает</div><h2 className="sec-h2">Три шага до автопилота</h2></div></S>
           <div className="steps">
             {[
               {n:"01",t:"Клиент пишет",d:"В мессенджер, на сайт — куда угодно. Агент подхватывает за 2 секунды. Клиент не остывает и не уходит."},
@@ -633,7 +638,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CASES */}
+      {/* 4. CASES — пруфы */}
       <section id="cases" style={{position:"relative",zIndex:1,padding:"100px 0"}}>
         <div className="wrap">
           <S><div style={{marginBottom:40}}><div className="sec-label">Кейсы</div><h2 className="sec-h2">Как это работает в деле</h2></div></S>
@@ -645,6 +650,13 @@ export default function Home() {
           <div className="case-layout" key={tab}>
             <div>
               <S><div className="case-title">{c.title}</div></S>
+              {tab === 0 && (
+                <S d={30}>
+                  <div className="case-cover">
+                    <img src={SCHOOL_IMG} alt="Школа английского Sunshine" loading="lazy" />
+                  </div>
+                </S>
+              )}
               <S d={50}><div className="case-desc">{c.desc}</div></S>
               <S d={100}><div className="case-metrics">
                 {c.metrics.map((m,i)=>(
@@ -674,7 +686,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FEATURES */}
+      {/* 5. FEATURES — что умеет */}
       <section id="features" style={{position:"relative",zIndex:1,padding:"100px 0"}}>
         <div className="wrap">
           <S><div style={{marginBottom:40}}><div className="sec-label">Возможности</div><h2 className="sec-h2">Что умеет агент</h2></div></S>
@@ -691,7 +703,61 @@ export default function Home() {
         </div>
       </section>
 
-      {/* STACK */}
+      {/* 6. SHOWCASE — мобильный мокап */}
+      <section id="showcase" style={{position:"relative",zIndex:1,padding:"100px 0"}}>
+        <div className="wrap">
+          <S><div style={{marginBottom:48}}>
+            <div className="sec-label">Как это выглядит</div>
+            <h2 className="sec-h2">Что получает клиент<br/>на своём телефоне</h2>
+            <p style={{fontSize:15,color:"var(--text-dim)",marginTop:14,maxWidth:520,lineHeight:1.65}}>Агент выглядит как живой менеджер. Отвечает моментально, ведёт диалог, передаёт горячего лида.</p>
+          </div></S>
+          <S d={80}>
+            <div className="showcase-layout">
+              <div className="showcase-phone">
+                <div className="showcase-screen">
+                  <div className="showcase-header">
+                    <div className="showcase-avatar">A</div>
+                    <div>
+                      <div className="showcase-name">Agento</div>
+                      <div className="showcase-status">● онлайн</div>
+                    </div>
+                  </div>
+                  {[
+                    {r:"b",t:"Добрый день! Чем могу помочь?"},
+                    {r:"u",t:"Хочу узнать подробнее о ваших услугах"},
+                    {r:"b",t:"Конечно. Под какой бизнес подбираем решение?"},
+                    {r:"u",t:"Салон красоты, записи через WhatsApp"},
+                    {r:"b",t:"Отлично. Агент подключится к WhatsApp и будет записывать клиентов автоматически. Хотите увидеть демо прямо сейчас?"},
+                    {r:"u",t:"Да, покажите"},
+                    {r:"b",t:"Запускаю демо для вас. Сейчас пришлю ссылку 👇"},
+                  ].map((m,i)=>(
+                    <div key={i} style={{display:"flex",justifyContent:m.r==="u"?"flex-end":"flex-start"}}>
+                      <div className={m.r==="b"?"ph-b":"ph-u"}>{m.t}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="showcase-points">
+                               {[
+                  {icon:"⚡",t:"Ответ за 2 секунды",d:"Клиент написал — агент уже отвечает. Даже ночью, в воскресенье, в праздник."},
+                  {icon:"🧠",t:"Понимает контекст",d:"Запоминает детали из диалога. Не просит повторять то, что уже сказано."},
+                  {icon:"📋",t:"Передаёт с резюме",d:"Менеджер видит: имя, потребность, история переписки. Сразу к делу."},
+                  {icon:"📱",t:"Любой мессенджер",d:"Telegram, WhatsApp, Avito, Instagram, чат на сайте — ваш выбор."},
+                ].map((p,i)=>(
+                  <S key={i} d={i*80}>
+                    <div className="showcase-point">
+                      <div className="showcase-point-icon">{p.icon}</div>
+                      <div className="showcase-point-text"><strong>{p.t}</strong>{p.d}</div>
+                    </div>
+                  </S>
+                ))}
+              </div>
+            </div>
+          </S>
+        </div>
+      </section>
+
+      {/* 7. STACK — инфраструктура */}
       <section id="stack" style={{position:"relative",zIndex:1,padding:"100px 0"}}>
         <div className="wrap">
           <S><div style={{marginBottom:48}}>
@@ -740,7 +806,62 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CALC */}
+      {/* 8. WORKFLOW — как я работаю */}
+      <section id="workflow" style={{position:"relative",zIndex:1,padding:"100px 0"}}>
+        <div className="wrap">
+          <S><div style={{marginBottom:48}}>
+            <div className="sec-label">Как я работаю</div>
+            <h2 className="sec-h2">Шесть шагов от идеи<br/>до работающего агента</h2>
+            <p style={{fontSize:15,color:"var(--text-dim)",marginTop:14,maxWidth:520,lineHeight:1.65}}>Никаких сюрпризов. Каждый этап согласован — вы знаете, что происходит и когда.</p>
+          </div></S>
+          <div className="wf-grid">
+            {WORKFLOW.map((w, i) => (
+              <S key={i} d={i * 80}>
+                <div className={`wf-card${i % 2 === 0 ? " wf-card-accent" : ""}`}>
+                  <div className="wf-num">{w.n}</div>
+                  <span className="wf-icon">{w.icon}</span>
+                  <div className="wf-title">{w.t}</div>
+                  <div className="wf-desc">{w.d}</div>
+                  {w.img && (
+                    <div className="wf-img-wrap">
+                      <img src={N8N_IMG} alt="Схема автоматизации в n8n" loading="lazy" width="600" height="300" />
+                    </div>
+                  )}
+                </div>
+              </S>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 9. TIMELINE — 7 дней */}
+      <section id="timeline" style={{position:"relative",zIndex:1,padding:"100px 0"}}>
+        <div className="wrap">
+          <S><div style={{marginBottom:48}}>
+            <div className="sec-label">Таймлайн</div>
+            <h2 className="sec-h2">От первого звонка<br/>до запуска — 7 дней</h2>
+            <p style={{fontSize:15,color:"var(--text-dim)",marginTop:14,maxWidth:500,lineHeight:1.65}}>Конкретные сроки для каждого шага. Никакого «мы уточним позже».</p>
+          </div></S>
+          <S d={80}>
+            <div className="tl-wrap">
+              {TIMELINE.map((item, i) => (
+                <div key={i} className="tl-item">
+                  <div className="tl-day-wrap">
+                    <div className="tl-dot" />
+                    <div className="tl-day">{item.day}</div>
+                  </div>
+                  <div className="tl-card">
+                    <div className="tl-title">{item.t}</div>
+                    <div className="tl-desc">{item.d}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </S>
+        </div>
+      </section>
+
+      {/* 10. CALC — вовлечение через калькулятор */}
       <section id="calc" style={{position:"relative",zIndex:1,padding:"100px 0"}}>
         <div className="wrap">
           <S><div style={{marginBottom:48}}>
@@ -752,61 +873,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SHOWCASE — phone mock, visible on mobile too */}
-      <section id="showcase" style={{position:"relative",zIndex:1,padding:"100px 0"}}>
-        <div className="wrap">
-          <S><div style={{marginBottom:48}}>
-            <div className="sec-label">Как это выглядит</div>
-            <h2 className="sec-h2">Что получает клиент<br/>на своём телефоне</h2>
-            <p style={{fontSize:15,color:"var(--text-dim)",marginTop:14,maxWidth:520,lineHeight:1.65}}>Агент выглядит как живой менеджер. Отвечает моментально, ведёт диалог, передаёт горячего лида.</p>
-          </div></S>
-          <S d={80}>
-            <div className="showcase-layout">
-              <div className="showcase-phone">
-                <div className="showcase-screen">
-                  <div className="showcase-header">
-                    <div className="showcase-avatar">A</div>
-                    <div>
-                      <div className="showcase-name">Agento</div>
-                      <div className="showcase-status">● онлайн</div>
-                    </div>
-                  </div>
-                  {[
-                    {r:"b",t:"Добрый день! Чем могу помочь?"},
-                    {r:"u",t:"Хочу узнать подробнее о ваших услугах"},
-                    {r:"b",t:"Конечно. Под какой бизнес подбираем решение?"},
-                    {r:"u",t:"Салон красоты, записи через WhatsApp"},
-                    {r:"b",t:"Отлично. Агент подключится к WhatsApp и будет записывать клиентов автоматически. Хотите увидеть демо прямо сейчас?"},
-                    {r:"u",t:"Да, покажите"},
-                    {r:"b",t:"Запускаю демо для вас. Сейчас пришлю ссылку 👇"},
-                  ].map((m,i)=>(
-                    <div key={i} style={{display:"flex",justifyContent:m.r==="u"?"flex-end":"flex-start"}}>
-                      <div className={m.r==="b"?"ph-b":"ph-u"}>{m.t}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="showcase-points">
-                {[
-                  {icon:"⚡",t:"Ответ за 2 секунды",d:"Клиент написал — агент уже отвечает. Даже ночью, в воскресенье, в праздник."},
-                  {icon:"🧠",t:"Понимает контекст",d:"Запоминает детали из диалога. Не просит повторять то, что уже сказано."},
-                  {icon:"📋",t:"Передаёт с резюме",d:"Менеджер видит: имя, потребность, история переписки. Сразу к делу."},
-                  {icon:"📱",t:"Любой мессенджер",d:"Telegram, WhatsApp, Avito, Instagram, чат на сайте — ваш выбор."},
-                ].map((p,i)=>(
-                  <S key={i} d={i*80}>
-                    <div className="showcase-point">
-                      <div className="showcase-point-icon">{p.icon}</div>
-                      <div className="showcase-point-text"><strong>{p.t}</strong>{p.d}</div>
-                    </div>
-                  </S>
-                ))}
-              </div>
-            </div>
-          </S>
-        </div>
-      </section>
-
-      {/* DELIVERY — что получает бизнес после запуска */}
+      {/* 11. DELIVERY — снятие страха «привязки к разработчику» */}
       <section id="delivery" style={{position:"relative",zIndex:1,padding:"80px 0"}}>
         <div className="wrap">
           <S><div style={{marginBottom:40}}>
@@ -839,32 +906,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* DEMO CTA BLOCK */}
-      <section style={{position:"relative",zIndex:1,padding:"60px 0"}}>
-        <div className="wrap">
-          <S>
-            <div className="demo-block">
-              <div className="demo-block-badge"><span className="live-dot"/>Ассистент онлайн прямо сейчас</div>
-              <h2 className="demo-block-h">Спросите ассистента прямо здесь</h2>
-                           <p className="demo-block-p">Нажмите на один из вопросов или откройте чат — это реальный ИИ-ассистент. Спросите что угодно про автоматизацию, интеграции или цены.</p>
-              <div className="demo-quick">
-                {QUICK_QUESTIONS.map((q, i) => (
-                  <button key={i} className="demo-quick-btn" onClick={() => openChat(q)}>{q}</button>
-                ))}
-              </div>
-              <div className="demo-btns">
-                <button className="btn-p" onClick={() => openChat()}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
-                  Открыть чат
-                </button>
-                <a href={TG} target="_blank" rel="noopener noreferrer" className="btn-s">Написать в Telegram</a>
-              </div>
-            </div>
-          </S>
-        </div>
-      </section>
-
-      {/* PRIVACY / FZ-152 */}
+      {/* 12. PRIVACY — снятие страха ФЗ-152 */}
       <section id="privacy" style={{position:"relative",zIndex:1,padding:"100px 0"}}>
         <div className="wrap">
           <S>
@@ -897,7 +939,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TRUST */}
+      {/* 13. TRUST — последний толчок */}
       <section style={{position:"relative",zIndex:1,padding:"80px 0"}}>
         <div className="wrap">
           <S><div style={{marginBottom:36}}>
@@ -918,7 +960,32 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* 14. DEMO BLOCK — микро-конверсия */}
+      <section style={{position:"relative",zIndex:1,padding:"60px 0"}}>
+        <div className="wrap">
+          <S>
+            <div className="demo-block">
+              <div className="demo-block-badge"><span className="live-dot"/>Ассистент онлайн прямо сейчас</div>
+              <h2 className="demo-block-h">Спросите ассистента прямо здесь</h2>
+              <p className="demo-block-p">Нажмите на один из вопросов или откройте чат — это реальный ИИ-ассистент. Спросите что угодно про автоматизацию, интеграции или цены.</p>
+              <div className="demo-quick">
+                {QUICK_QUESTIONS.map((q, i) => (
+                  <button key={i} className="demo-quick-btn" onClick={() => openChat(q)}>{q}</button>
+                ))}
+              </div>
+              <div className="demo-btns">
+                <button className="btn-p" onClick={() => openChat()}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+                  Открыть чат
+                </button>
+                <a href={TG} target="_blank" rel="noopener noreferrer" className="btn-s">Написать в Telegram</a>
+              </div>
+            </div>
+          </S>
+        </div>
+      </section>
+
+      {/* 15. CTA — финал */}
       <section style={{position:"relative",zIndex:1,padding:"60px 0 100px"}}>
         <div className="wrap">
           <S><div className="cta-card">
