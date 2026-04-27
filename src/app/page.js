@@ -1,0 +1,368 @@
+"use client";
+import { useState, useEffect, useRef, useCallback } from "react";
+import ChatWidget from "@/components/ChatWidget";
+
+const TG = "https://t.me/arinashrr";
+const CRM = "https://speakup-crm.vercel.app";
+
+/* ── Scroll reveal ── */
+function S({ children, d = 0, style = {} }) {
+  const ref = useRef(null);
+  const [v, setV] = useState(false);
+  useEffect(() => {
+    const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) setV(true); }, { threshold: 0.08 });
+    if (ref.current) o.observe(ref.current);
+    return () => o.disconnect();
+  }, []);
+  return <div ref={ref} style={{ ...style, opacity: v ? 1 : 0, transform: v ? "none" : "translateY(36px)", transition: `all .7s cubic-bezier(.22,1,.36,1) ${d}ms` }}>{children}</div>;
+}
+
+/* ── Counter ── */
+function Ct({ end, sfx = "" }) {
+  const [v, setV] = useState(0);
+  const ref = useRef(null);
+  const ran = useRef(false);
+  useEffect(() => {
+    const o = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting && !ran.current) {
+        ran.current = true;
+        const s = performance.now(), n = parseFloat(end);
+        const f = (now) => { const p = Math.min((now - s) / 1600, 1); setV(Math.round(n * (1 - Math.pow(1 - p, 3)))); if (p < 1) requestAnimationFrame(f); };
+        requestAnimationFrame(f);
+      }
+    }, { threshold: 0.5 });
+    if (ref.current) o.observe(ref.current);
+    return () => o.disconnect();
+  }, [end]);
+  return <span ref={ref}>{v}{sfx}</span>;
+}
+
+/* ── Data ── */
+const CASES = [
+  {
+    tag: "Онлайн-школа", title: "Агент записывает на курсы, пока менеджер спит",
+    desc: "Квалифицирует клиента, подбирает курс под уровень и цель, бронирует слот в календаре и записывает на пробный урок. Менеджер утром видит горячего клиента с полным контекстом.",
+    metrics: [{ v: "2", s: " сек", l: "ответ" }, { v: "38", s: "%", l: "конверсия" }, { v: "0", s: "", l: "потерянных" }],
+    chat: [
+      { r: "b", t: "Здравствуйте. Меня зовут Аня, школа SpeakUp. Как могу к вам обращаться?" },
+      { r: "u", t: "Максим" },
+      { r: "b", t: "Приятно, Максим. Какой у вас уровень английского?" },
+      { r: "u", t: "B1, средний" },
+      { r: "b", t: "Для чего планируете учить?" },
+      { r: "u", t: "Переговоры с иностранными партнёрами" },
+      { r: "b", t: "Под переговоры подойдёт Бизнес-английский. Мини-группа до 4 человек. Записать на бесплатный пробный?" },
+      { r: "u", t: "Да" },
+      { r: "b", t: "Записала на среду в 14:00. Ссылка на Zoom придёт за час." },
+    ],
+  },
+  {
+    tag: "Тур-бизнес", title: "Консультирует по турам и доводит до оплаты",
+    desc: "Клиент пишет — агент подбирает тур из базы, отвечает на вопросы по визам и отелям, формирует предложение и высылает ссылку на оплату. Без участия менеджера.",
+    metrics: [{ v: "24", s: "/7", l: "онлайн" }, { v: "3", s: "x", l: "заявки ночью" }, { v: "45", s: "%", l: "дешевле лид" }],
+    chat: [
+      { r: "b", t: "Добрый день. Ассистент TravelPro. Куда планируете поехать?" },
+      { r: "u", t: "Турция, на двоих, в июне" },
+      { r: "b", t: "На 7 ночей, всё включено — от 89 000. Отель 5 звёзд на первой линии. Показать варианты?" },
+      { r: "u", t: "С детским клубом, если есть" },
+      { r: "b", t: "Нашла 3 варианта. Лучший — Rixos Premium, 112 000. Забронировать?" },
+      { r: "u", t: "Давайте" },
+      { r: "b", t: "Договор и ссылка на оплату отправлены на ваш email." },
+    ],
+  },
+  {
+    tag: "Интернет-магазин", title: "Продавец, который работает без перерывов",
+    desc: "Помогает выбрать товар, сравнивает модели, проверяет наличие, оформляет заказ прямо в диалоге. Одновременно с сотнями клиентов.",
+    metrics: [{ v: "27", s: "%", l: "рост чека" }, { v: "100", s: "+", l: "диалогов" }, { v: "10", s: " сек", l: "до ответа" }],
+    chat: [
+      { r: "b", t: "Здравствуйте. Что ищете? Помогу подобрать." },
+      { r: "u", t: "Кроссовки для бега, до 10 000" },
+      { r: "b", t: "Nike Pegasus 41 — 9 490, размеры 42-45. Лёгкие, хорошая амортизация." },
+      { r: "u", t: "43, беру" },
+      { r: "b", t: "Заказ оформлен. Доставка завтра до 18:00." },
+    ],
+  },
+];
+
+const FEATURES = [
+  { t: "Консультирует круглосуточно", d: "Знает всё о продукте, ценах, условиях. Отвечает мгновенно — от наличия до доставки.", w: true },
+  { t: "Квалифицирует лиды", d: "Собирает имя, потребность, бюджет, контакт. Передаёт только тех, кто готов." },
+  { t: "Бронирует слоты", d: "Показывает свободное время, записывает в календарь, отправляет напоминания." },
+  { t: "Работает с возражениями", d: "Персональные предложения которые закрывают конкретное сомнение клиента.", w: true },
+  { t: "CRM-панель", d: "Все лиды, диалоги и метрики — в одном месте." },
+  { t: "Эскалация менеджеру", d: "Сложный случай — передаёт с резюме диалога и рекомендацией." },
+];
+
+export default function Home() {
+  const [tab, setTab] = useState(0);
+  const [mouse, setMouse] = useState({ x: 0.5, y: 0.5 });
+  const c = CASES[tab];
+
+  const onM = useCallback((e) => {
+    setMouse({ x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight });
+  }, []);
+  useEffect(() => { window.addEventListener("mousemove", onM); return () => window.removeEventListener("mousemove", onM); }, [onM]);
+
+  const Phone = ({ chat }) => (
+    <div className="phone-wrap">
+      <div className="phone-body">
+        <div className="phone-notch" />
+        <div className="phone-screen">
+          <div style={{ fontSize: 10, color: "var(--accent)", fontWeight: 600, textAlign: "center", marginBottom: 8, letterSpacing: 2, textTransform: "uppercase", fontFamily: "'JetBrains Mono', monospace" }}>Live Demo</div>
+          {chat.map((m, i) => (
+            <div key={i} style={{ display: "flex", justifyContent: m.r === "u" ? "flex-end" : "flex-start" }}>
+              <div className={m.r === "b" ? "ph-b" : "ph-u"}>{m.t}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div>
+      <style>{`
+        .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+        /* Ambient BG */
+        .ambient{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+        .ambient .orb1{position:absolute;top:-15%;left:-5%;width:50vw;height:50vh;border-radius:50%;background:radial-gradient(circle,rgba(74,108,247,0.06),transparent 70%);transition:transform .4s ease-out}
+        .ambient .orb2{position:absolute;bottom:-20%;right:-10%;width:45vw;height:45vh;border-radius:50%;background:radial-gradient(circle,rgba(124,92,230,0.04),transparent 70%);transition:transform .4s ease-out}
+        .ambient .grid{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.018) 1px,transparent 1px);background-size:28px 28px}
+
+        /* Nav */
+        .nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:12px 0;background:rgba(8,9,14,0.8);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.03)}
+        .nav-inner{display:flex;align-items:center;justify-content:space-between}
+        .nav-logo{display:flex;align-items:center;gap:8px}
+        .nav-mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#4a6cf7,#7c5ce6);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#fff}
+        .nav-name{font-weight:700;font-size:17px;color:var(--text-bright);letter-spacing:-.3px}
+        .nav-links{display:flex;align-items:center;gap:20px}
+        .nav-link{font-size:13px;color:var(--text-dim);text-decoration:none;transition:color .2s}
+        .nav-link:hover{color:var(--text)}
+        .nav-cta{display:inline-flex;align-items:center;gap:6px;padding:8px 20px;border-radius:10px;background:linear-gradient(135deg,#4a6cf7,#3b5de7);color:#fff;font-weight:600;font-size:13px;text-decoration:none;transition:all .2s;border:none;box-shadow:0 2px 12px rgba(74,108,247,0.2)}
+        .nav-cta:hover{box-shadow:0 4px 20px rgba(74,108,247,0.3);transform:translateY(-1px)}
+
+        @media(max-width:640px){
+          .nav-links .nav-link{display:none}
+        }
+
+        /* Hero */
+        .hero{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;padding:120px 0 80px}
+        .hero-grid{display:grid;grid-template-columns:1fr 260px;gap:48px;align-items:center}
+        .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border-radius:24px;border:1px solid rgba(74,108,247,0.12);background:rgba(74,108,247,0.04);font-size:12px;color:var(--accent);font-weight:500;margin-bottom:28px}
+        .hero-badge .dot{width:5px;height:5px;border-radius:50%;background:#34d399}
+        .hero-h1{font-size:clamp(32px,5vw,56px);font-weight:800;line-height:1.08;letter-spacing:-1.5px;color:var(--text-bright);margin-bottom:20px}
+        .hero-h1 .grad{background:linear-gradient(135deg,#638cff 0%,#9f7afa 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .hero-p{font-size:16px;color:var(--text-dim);line-height:1.65;margin-bottom:32px;max-width:440px}
+        .hero-btns{display:flex;gap:10px;flex-wrap:wrap}
+        .btn-p{display:inline-flex;align-items:center;gap:6px;padding:14px 30px;border-radius:12px;background:linear-gradient(135deg,#4a6cf7,#3b5de7);color:#fff;font-weight:600;font-size:14px;text-decoration:none;border:none;cursor:pointer;transition:all .25s;box-shadow:0 4px 16px rgba(74,108,247,0.2);font-family:inherit}
+        .btn-p:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(74,108,247,0.3)}
+        .btn-s{display:inline-flex;align-items:center;gap:6px;padding:14px 30px;border-radius:12px;background:rgba(255,255,255,0.03);color:var(--text);font-weight:500;font-size:14px;text-decoration:none;border:1px solid rgba(255,255,255,0.06);cursor:pointer;transition:all .25s;font-family:inherit}
+        .btn-s:hover{border-color:var(--border-hover);color:var(--text-bright)}
+        .hero-stats{display:flex;gap:40px;margin-top:48px;flex-wrap:wrap}
+        .hero-stat-val{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;background:linear-gradient(135deg,#638cff,#9f7afa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .hero-stat-label{font-size:12px;color:var(--text-dim);margin-top:2px}
+
+        @media(max-width:768px){
+          .hero-grid{grid-template-columns:1fr;text-align:center}
+          .hero-p{margin-left:auto;margin-right:auto}
+          .hero-btns{justify-content:center}
+          .hero-stats{justify-content:center}
+          .phone-wrap{display:none}
+        }
+
+        /* Phone */
+        .phone-wrap{flex-shrink:0;animation:float 7s ease-in-out infinite}
+        .phone-body{width:260px;border-radius:32px;background:#0a0c14;border:1.5px solid rgba(255,255,255,0.05);padding:8px;box-shadow:0 24px 64px rgba(0,0,0,0.5)}
+        .phone-notch{width:70px;height:3px;background:rgba(255,255,255,0.06);border-radius:3px;margin:0 auto 10px}
+        .phone-screen{background:#0e1018;border-radius:26px;padding:20px 10px 10px;min-height:360px;display:flex;flex-direction:column;gap:5px}
+        .ph-b{padding:7px 10px;border-radius:12px 12px 12px 2px;background:#151820;border:1px solid rgba(255,255,255,0.03);font-size:11.5px;line-height:1.4;max-width:88%;color:var(--text)}
+        .ph-u{padding:7px 10px;border-radius:12px 12px 2px 12px;background:rgba(74,108,247,0.08);border:1px solid rgba(74,108,247,0.08);font-size:11.5px;line-height:1.4;max-width:88%;color:#b4c6ff;align-self:flex-end}
+
+        /* Section label */
+        .sec-label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);font-weight:500;text-transform:uppercase;letter-spacing:3px;margin-bottom:12px}
+        .sec-h2{font-size:clamp(24px,3.5vw,40px);font-weight:800;letter-spacing:-1px;color:var(--text-bright);margin-bottom:0}
+
+        /* Steps */
+        .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+        .step{border-radius:20px;padding:32px 28px;background:var(--bg-card);backdrop-filter:blur(20px);border:1px solid var(--border);transition:border-color .3s,box-shadow .3s}
+        .step:hover{border-color:var(--border-hover);box-shadow:0 8px 32px var(--accent-glow)}
+        .step-num{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);font-weight:700;opacity:.5;margin-bottom:16px}
+        .step-title{font-size:18px;font-weight:700;color:var(--text-bright);margin-bottom:8px}
+        .step-desc{font-size:14px;color:var(--text-dim);line-height:1.6}
+
+        @media(max-width:768px){
+          .steps{grid-template-columns:1fr}
+        }
+
+        /* Cases */
+        .case-tabs{display:flex;gap:8px;margin-bottom:40px;flex-wrap:wrap}
+        .case-tab{padding:9px 20px;border-radius:24px;font-size:13px;font-weight:500;cursor:pointer;transition:all .25s;font-family:inherit;border:none}
+        .case-tab-a{background:linear-gradient(135deg,#4a6cf7,#3b5de7);color:#fff;box-shadow:0 3px 14px rgba(74,108,247,0.2)}
+        .case-tab-i{background:transparent;color:var(--text-dim);border:1px solid rgba(255,255,255,0.06)}
+        .case-tab-i:hover{border-color:rgba(255,255,255,0.1);color:var(--text)}
+        .case-layout{display:grid;grid-template-columns:1fr 280px;gap:40px;align-items:start}
+        .case-title{font-size:clamp(22px,3vw,30px);font-weight:700;color:var(--text-bright);line-height:1.2;margin-bottom:14px;letter-spacing:-.5px}
+        .case-desc{font-size:15px;color:var(--text-dim);line-height:1.65;margin-bottom:28px;max-width:500px}
+        .case-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px}
+        .case-metric{text-align:center;padding:20px 12px;border-radius:16px;background:rgba(74,108,247,0.03);border:1px solid rgba(74,108,247,0.06)}
+        .case-metric-val{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;background:linear-gradient(135deg,#638cff,#9f7afa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .case-metric-label{font-size:11px;color:var(--text-dim);margin-top:4px}
+
+        @media(max-width:768px){
+          .case-layout{grid-template-columns:1fr}
+          .case-layout .phone-wrap{display:none}
+        }
+
+        /* Bento features */
+        .bento{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+        .bento-item{border-radius:18px;padding:26px 24px;background:var(--bg-card);backdrop-filter:blur(20px);border:1px solid var(--border);transition:border-color .3s}
+        .bento-item:hover{border-color:var(--border-hover)}
+        .bento-item.wide{grid-column:span 2}
+        .bento-title{font-size:15px;font-weight:700;color:var(--text-bright);margin-bottom:6px}
+        .bento-desc{font-size:13px;color:var(--text-dim);line-height:1.55}
+
+        @media(max-width:768px){
+          .bento{grid-template-columns:1fr}
+          .bento-item.wide{grid-column:span 1}
+        }
+
+        /* CTA */
+        .cta-card{max-width:640px;margin:0 auto;border-radius:24px;padding:60px 40px;text-align:center;position:relative;overflow:hidden;background:var(--bg-card);backdrop-filter:blur(24px);border:1px solid var(--border);box-shadow:0 0 48px var(--accent-glow)}
+        .cta-card .orb{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(74,108,247,0.08),transparent);pointer-events:none}
+
+        @media(max-width:480px){
+          .cta-card{padding:40px 24px}
+          .btn-p,.btn-s{padding:12px 24px;font-size:13px}
+        }
+      `}</style>
+
+      {/* BG */}
+      <div className="ambient">
+        <div className="orb1" style={{ transform: `translate(${mouse.x * 25}px, ${mouse.y * 25}px)` }} />
+        <div className="orb2" style={{ transform: `translate(${-mouse.x * 18}px, ${-mouse.y * 18}px)` }} />
+        <div className="grid" />
+      </div>
+
+      {/* NAV */}
+      <nav className="nav">
+        <div className="wrap nav-inner">
+          <div className="nav-logo">
+            <div className="nav-mark">A</div>
+            <span className="nav-name">agento</span>
+          </div>
+          <div className="nav-links">
+            <a href="#how" className="nav-link">Процесс</a>
+            <a href="#cases" className="nav-link">Кейсы</a>
+            <a href="#features" className="nav-link">Возможности</a>
+            <a href={TG} target="_blank" rel="noopener noreferrer" className="nav-cta">Написать</a>
+          </div>
+        </div>
+      </nav>
+
+      {/* HERO */}
+      <section className="hero">
+        <div className="wrap hero-grid">
+          <div>
+            <S><div className="hero-badge"><span className="dot"/>Свободна сейчас / от 3 дней</div></S>
+            <S d={80}><h1 className="hero-h1">ИИ-агент продаёт<br/><span className="grad">пока вы спите</span></h1></S>
+            <S d={150}><p className="hero-p">Клиенты уходят не потому что у вас плохой продукт — конкурент ответил быстрее. Агент отвечает за 2 секунды. Днём и ночью. Без выходных.</p></S>
+            <S d={220}><div className="hero-btns">
+              <a href={TG} target="_blank" rel="noopener noreferrer" className="btn-p">Обсудить проект</a>
+              <a href="#cases" className="btn-s">Как это работает</a>
+            </div></S>
+            <S d={320}><div className="hero-stats">
+              {[{v:"2",s:" сек",l:"ответ агента"},{v:"24",s:"/7",l:"без выходных"},{v:"38",s:"%",l:"рост конверсии"}].map((m,i)=>(
+                <div key={i}><div className="hero-stat-val"><Ct end={m.v} sfx={m.s}/></div><div className="hero-stat-label">{m.l}</div></div>
+              ))}
+            </div></S>
+          </div>
+          <S d={300}><Phone chat={CASES[0].chat.slice(0,7)}/></S>
+        </div>
+      </section>
+
+      {/* HOW */}
+      <section id="how" style={{position:"relative",zIndex:1,padding:"100px 0"}}>
+        <div className="wrap">
+          <S><div style={{marginBottom:48}}><div className="sec-label">Процесс</div><h2 className="sec-h2">Три шага до автопилота</h2></div></S>
+          <div className="steps">
+            {[
+              {n:"01",t:"Клиент пишет",d:"В мессенджер, на сайт — куда угодно. Агент подхватывает за 2 секунды. Клиент не остывает и не уходит."},
+              {n:"02",t:"Агент квалифицирует",d:"Выясняет потребность, консультирует, подбирает вариант. Как лучший менеджер — только работает круглосуточно."},
+              {n:"03",t:"Вы получаете горячего",d:"Имя, телефон, потребность, история диалога. Менеджер работает только с готовыми клиентами."},
+            ].map((s,i)=>(
+              <S key={i} d={i*100}><div className="step"><div className="step-num">{s.n}</div><div className="step-title">{s.t}</div><div className="step-desc">{s.d}</div></div></S>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CASES */}
+      <section id="cases" style={{position:"relative",zIndex:1,padding:"100px 0"}}>
+        <div className="wrap">
+          <S><div style={{marginBottom:40}}><div className="sec-label">Кейсы</div><h2 className="sec-h2">Как это работает в деле</h2></div></S>
+          <S d={60}><div className="case-tabs">
+            {CASES.map((cs,i)=>(
+              <button key={i} className={`case-tab ${tab===i?"case-tab-a":"case-tab-i"}`} onClick={()=>setTab(i)}>{cs.tag}</button>
+            ))}
+          </div></S>
+          <div className="case-layout" key={tab}>
+            <div>
+              <S><div className="case-title">{c.title}</div></S>
+              <S d={50}><div className="case-desc">{c.desc}</div></S>
+              <S d={100}><div className="case-metrics">
+                {c.metrics.map((m,i)=>(
+                  <div key={i} className="case-metric">
+                    <div className="case-metric-val"><Ct end={m.v} sfx={m.s}/></div>
+                    <div className="case-metric-label">{m.l}</div>
+                  </div>
+                ))}
+              </div></S>
+              <S d={150}><div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
+                <a href={TG} target="_blank" rel="noopener noreferrer" className="btn-p">Хочу так же</a>
+                <a href={CRM} target="_blank" rel="noopener noreferrer" className="btn-s">Посмотреть CRM</a>
+              </div></S>
+            </div>
+            <S d={180}><Phone chat={c.chat}/></S>
+          </div>
+        </div>
+      </section>
+
+      {/* FEATURES */}
+      <section id="features" style={{position:"relative",zIndex:1,padding:"100px 0"}}>
+        <div className="wrap">
+          <S><div style={{marginBottom:40}}><div className="sec-label">Возможности</div><h2 className="sec-h2">Что умеет агент</h2></div></S>
+          <div className="bento">
+            {FEATURES.map((f,i)=>(
+              <S key={i} d={i*60} style={f.w?{gridColumn:"span 2"}:{}}>
+                <div className={`bento-item${f.w?" wide":""}`}>
+                  <div className="bento-title">{f.t}</div>
+                  <div className="bento-desc">{f.d}</div>
+                </div>
+              </S>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section style={{position:"relative",zIndex:1,padding:"60px 0 100px"}}>
+        <div className="wrap">
+          <S><div className="cta-card">
+            <div className="orb" style={{top:-60,right:-60,width:240,height:240}}/>
+            <div className="orb" style={{bottom:-40,left:-40,width:160,height:160}}/>
+            <h2 style={{fontSize:"clamp(22px,3.5vw,32px)",fontWeight:700,color:"var(--text-bright)",marginBottom:14,letterSpacing:-.5,position:"relative"}}>Готовы запустить ИИ-агента?</h2>
+            <p style={{fontSize:15,color:"var(--text-dim)",marginBottom:32,position:"relative",maxWidth:400,margin:"0 auto 32px",lineHeight:1.6}}>Напишите — обсудим проект, покажу как это будет работать у вас. Стоимость договорная.</p>
+            <a href={TG} target="_blank" rel="noopener noreferrer" className="btn-p" style={{position:"relative"}}>Написать Арине</a>
+            <p style={{fontSize:12,color:"var(--text-dim)",marginTop:16,position:"relative",opacity:.6}}>@arinashrr / Telegram</p>
+          </div></S>
+        </div>
+      </section>
+
+      <footer style={{position:"relative",zIndex:1,padding:"16px 20px",borderTop:"1px solid rgba(255,255,255,0.02)",textAlign:"center"}}>
+        <span style={{fontSize:11,color:"var(--text-dim)",opacity:.4}}>2026 Agento / Арина / ИИ-агенты для бизнеса</span>
+      </footer>
+
+      <ChatWidget/>
+    </div>
+  );
+}
