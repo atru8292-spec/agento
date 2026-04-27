@@ -93,43 +93,12 @@ const FEATURES = [
 ];
 
 const WORKFLOW = [
-  {
-    n: "01",
-    icon: "💬",
-    t: "Обсуждаем задачу",
-    d: "Разбираемся, как должен работать бот: какие вопросы задавать, как квалифицировать, куда передавать лида. Я задаю правильные вопросы — вы получаете агента, который понимает ваш бизнес.",
-  },
-  {
-    n: "02",
-    icon: "🎯",
-    t: "Показываю мини-демо",
-    d: "Делаю рабочий прототип специально под ваш бизнес — не абстрактные скриншоты, а живой бот. Можете потрогать руками и понять, как это будет работать у вас.",
-  },
-  {
-    n: "03",
-    icon: "📋",
-    t: "Составляем ТЗ",
-    d: "Фиксируем всё письменно: логика диалогов, интеграции, сценарии, метрики. ТЗ — это защита для обеих сторон. Вы знаете что получите, я знаю что делать.",
-  },
-  {
-    n: "04",
-    icon: "⚙️",
-    t: "Разработка",
-    d: "Строю агента на n8n + Claude API. Каждый узел автоматизации — это логика, которую вы согласовали. Полная прозрачность: покажу схему до запуска.",
-    img: true,
-  },
-  {
-    n: "05",
-    icon: "🧪",
-    t: "Тестирование",
-    d: "Прогоняю все сценарии — типичные, нестандартные, стрессовые. Ловлю баги до того, как клиент их найдёт. Сдаю только то, в чём уверена.",
-  },
-  {
-    n: "06",
-    icon: "🛡️",
-    t: "Поддержка или передача",
-    d: "Выбор за вами: техническая поддержка от меня — или полная передача инструкций и доступов, чтобы вести всё самостоятельно. Никаких закрытых черных ящиков.",
-  },
+  { n: "01", icon: "💬", t: "Обсуждаем задачу", d: "Разбираемся, как должен работать бот: какие вопросы задавать, как квалифицировать, куда передавать лида. Я задаю правильные вопросы — вы получаете агента, который понимает ваш бизнес." },
+  { n: "02", icon: "🎯", t: "Показываю мини-демо", d: "Делаю рабочий прототип специально под ваш бизнес — не абстрактные скриншоты, а живой бот. Можете потрогать руками и понять, как это будет работать у вас." },
+  { n: "03", icon: "📋", t: "Составляем ТЗ", d: "Фиксируем всё письменно: логика диалогов, интеграции, сценарии, метрики. ТЗ — это защита для обеих сторон. Вы знаете что получите, я знаю что делать." },
+  { n: "04", icon: "⚙️", t: "Разработка", d: "Строю агента на n8n + Claude API. Каждый узел автоматизации — это логика, которую вы согласовали. Полная прозрачность: покажу схему до запуска.", img: true },
+  { n: "05", icon: "🧪", t: "Тестирование", d: "Прогоняю все сценарии — типичные, нестандартные, стрессовые. Ловлю баги до того, как клиент их найдёт. Сдаю только то, в чём уверена." },
+  { n: "06", icon: "🛡️", t: "Поддержка или передача", d: "Выбор за вами: техническая поддержка от меня — или полная передача инструкций и доступов, чтобы вести всё самостоятельно. Никаких закрытых черных ящиков." },
 ];
 
 const TRUST = [
@@ -139,9 +108,116 @@ const TRUST = [
   { icon: "📊", t: "С результатом", d: "Ориентируюсь на метрики: конверсия, скорость ответа, количество лидов. Не «сдала и ушла»." },
 ];
 
+/* ── Stack data ── */
+const STACK_LAYERS = [
+  {
+    label: "Модель ИИ",
+    color: "#4a6cf7",
+    items: ["Claude", "OpenAI", "YandexGPT", "GigaChat"],
+    desc: "Подбираю под задачу и бюджет. Не навязываю один инструмент.",
+  },
+  {
+    label: "Каналы",
+    color: "#7c5ce6",
+    items: ["Telegram", "WhatsApp", "Avito", "Instagram", "Сайт"],
+    desc: "Любой мессенджер или чат на сайте — подключаю туда, где ваши клиенты.",
+  },
+  {
+    label: "CRM",
+    color: "#00b4d8",
+    items: ["Bitrix24", "amoCRM", "Web CRM"],
+    desc: "Встраиваюсь в вашу воронку или собираю собственную веб-панель.",
+  },
+  {
+    label: "Аналитика",
+    color: "#34d399",
+    items: ["Дашборд", "История диалогов", "Воронка лидов", "Метрики"],
+    desc: "Полный контур управления: видите что происходит, в реальном времени.",
+  },
+];
+
+/* ── Timeline data ── */
+const TIMELINE = [
+  { day: "День 1", t: "Разбор задачи", d: "Кастдев за 60 минут: выясняю бизнес-процесс, болевые точки, ожидания. Вы уходите с конкретным планом." },
+  { day: "День 3", t: "Живое демо", d: "Рабочий прототип под ваш бизнес — не скриншот, а реальный бот. Трогаете, даёте обратную связь." },
+  { day: "День 5", t: "ТЗ подписано", d: "Фиксируем логику диалогов, интеграции, метрики. Никаких сюрпризов в процессе." },
+  { day: "День 10", t: "Агент готов", d: "Собранный, протестированный агент. Показываю схему, объясняю каждый узел." },
+  { day: "День 12", t: "Запуск", d: "Деплой на ваш сайт или мессенджер. Первые реальные диалоги — уже с реальными клиентами." },
+  { day: "День 14+", t: "Поддержка", d: "Мониторинг, правки по диалогам, масштабирование. Или передача всех доступов — на ваш выбор." },
+];
+
+/* ── Calc data ── */
+const CALC_PRESETS = [
+  { label: "Малый бизнес", leads: 30, hours: 2, salary: 50000 },
+  { label: "Средний бизнес", leads: 100, hours: 4, salary: 80000 },
+  { label: "Крупный отдел", leads: 300, hours: 6, salary: 120000 },
+];
+
+function Calculator() {
+  const [leads, setLeads] = useState(60);
+  const [hours, setHours] = useState(3);
+  const [salary, setSalary] = useState(60000);
+  const [preset, setPreset] = useState(null);
+
+  const applyPreset = (p, idx) => {
+    setLeads(p.leads); setHours(p.hours); setSalary(p.salary); setPreset(idx);
+  };
+
+  const lostLeads = Math.round(leads * 0.35);
+  const savedLeadsRub = Math.round(lostLeads * (salary / leads) * 1.5);
+  const savedHoursRub = Math.round(hours * 22 * (salary / 160));
+  const total = savedLeadsRub + savedHoursRub;
+
+  return (
+    <div className="calc-wrap">
+      <div className="calc-presets">
+        {CALC_PRESETS.map((p, i) => (
+          <button key={i} className={`calc-preset${preset === i ? " active" : ""}`} onClick={() => applyPreset(p, i)}>{p.label}</button>
+        ))}
+      </div>
+      <div className="calc-sliders">
+        <div className="calc-row">
+          <div className="calc-label">Заявок в месяц <span className="calc-val">{leads}</span></div>
+          <input type="range" min="10" max="500" value={leads} onChange={e => { setLeads(+e.target.value); setPreset(null); }} className="calc-slider" />
+        </div>
+        <div className="calc-row">
+          <div className="calc-label">Часов в день на обработку <span className="calc-val">{hours}</span></div>
+          <input type="range" min="1" max="8" value={hours} onChange={e => { setHours(+e.target.value); setPreset(null); }} className="calc-slider" />
+        </div>
+        <div className="calc-row">
+          <div className="calc-label">Зарплата менеджера (₽/мес) <span className="calc-val">{salary.toLocaleString()}</span></div>
+          <input type="range" min="30000" max="200000" step="5000" value={salary} onChange={e => { setSalary(+e.target.value); setPreset(null); }} className="calc-slider" />
+        </div>
+      </div>
+      <div className="calc-results">
+        <div className="calc-result-item">
+          <div className="calc-result-val">+{lostLeads}</div>
+          <div className="calc-result-label">заявок возвращаем</div>
+          <div className="calc-result-sub">которые уходили без ответа</div>
+        </div>
+        <div className="calc-result-item">
+          <div className="calc-result-val">{(hours * 22).toFixed(0)}ч</div>
+          <div className="calc-result-label">освобождаем</div>
+          <div className="calc-result-sub">менеджер занимается продажами</div>
+        </div>
+        <div className="calc-result-item highlight">
+          <div className="calc-result-val">~{(total / 1000).toFixed(0)}к ₽</div>
+          <div className="calc-result-label">выгода в месяц</div>
+          <div className="calc-result-sub">упущенный доход + экономия ФОТ</div>
+        </div>
+      </div>
+      <div className="calc-cta-row">
+        <a href={TG} target="_blank" rel="noopener noreferrer" className="btn-p" style={{ fontSize: 13, padding: "11px 26px" }}>Обсудить под мой бизнес</a>
+        <span className="calc-disclaimer">* расчёт ориентировочный, обсудим точные цифры</span>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const [tab, setTab] = useState(0);
   const [mouse, setMouse] = useState({ x: 0.5, y: 0.5 });
+  const [demoOpen, setDemoOpen] = useState(false);
   const c = CASES[tab];
 
   const onM = useCallback((e) => {
@@ -187,10 +263,7 @@ export default function Home() {
         .nav-link:hover{color:var(--text)}
         .nav-cta{display:inline-flex;align-items:center;gap:6px;padding:8px 20px;border-radius:10px;background:linear-gradient(135deg,#4a6cf7,#3b5de7);color:#fff;font-weight:600;font-size:13px;text-decoration:none;transition:all .2s;border:none;box-shadow:0 2px 12px rgba(74,108,247,0.2)}
         .nav-cta:hover{box-shadow:0 4px 20px rgba(74,108,247,0.3);transform:translateY(-1px)}
-
-        @media(max-width:640px){
-          .nav-links .nav-link{display:none}
-        }
+        @media(max-width:640px){.nav-links .nav-link{display:none}}
 
         /* Hero */
         .hero{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;padding:120px 0 80px}
@@ -208,7 +281,6 @@ export default function Home() {
         .hero-stats{display:flex;gap:40px;margin-top:48px;flex-wrap:wrap}
         .hero-stat-val{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:700;background:linear-gradient(135deg,#638cff,#9f7afa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
         .hero-stat-label{font-size:12px;color:var(--text-dim);margin-top:2px}
-
         @media(max-width:768px){
           .hero-grid{grid-template-columns:1fr;text-align:center}
           .hero-p{margin-left:auto;margin-right:auto}
@@ -236,10 +308,7 @@ export default function Home() {
         .step-num{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);font-weight:700;opacity:.5;margin-bottom:16px}
         .step-title{font-size:18px;font-weight:700;color:var(--text-bright);margin-bottom:8px}
         .step-desc{font-size:14px;color:var(--text-dim);line-height:1.6}
-
-        @media(max-width:768px){
-          .steps{grid-template-columns:1fr}
-        }
+        @media(max-width:768px){.steps{grid-template-columns:1fr}}
 
         /* Cases */
         .case-tabs{display:flex;gap:8px;margin-bottom:40px;flex-wrap:wrap}
@@ -254,19 +323,13 @@ export default function Home() {
         .case-metric{text-align:center;padding:20px 12px;border-radius:16px;background:rgba(74,108,247,0.03);border:1px solid rgba(74,108,247,0.06)}
         .case-metric-val{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;background:linear-gradient(135deg,#638cff,#9f7afa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
         .case-metric-label{font-size:11px;color:var(--text-dim);margin-top:4px}
-
         .demo-card{margin-top:20px;padding:18px 22px;border-radius:16px;background:linear-gradient(135deg,rgba(99,140,255,0.05),rgba(159,122,250,0.04));border:1px solid rgba(99,140,255,0.12);position:relative;overflow:hidden}
         .demo-card::before{content:"";position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(180deg,#638cff,#9f7afa)}
         .demo-card-label{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--accent);font-weight:600;margin-bottom:8px;text-transform:uppercase;letter-spacing:2px;font-family:'JetBrains Mono',monospace}
         .demo-card-label .live-dot{width:6px;height:6px;border-radius:50%;background:#34d399;box-shadow:0 0 8px rgba(52,211,153,0.6);animation:livePulse 1.8s ease-in-out infinite}
-        @keyframes livePulse{
-          0%,100%{opacity:1}
-          50%{opacity:.4}
-        }
+        @keyframes livePulse{0%,100%{opacity:1}50%{opacity:.4}}
         .demo-card-text{font-size:14px;color:var(--text);margin-bottom:14px;line-height:1.55}
-
         .crm-note{font-size:11px;color:var(--text-dim);opacity:.65;margin-top:10px;font-family:'JetBrains Mono',monospace;letter-spacing:.3px}
-
         @media(max-width:768px){
           .case-layout{grid-template-columns:1fr}
           .case-layout .phone-wrap{display:none}
@@ -279,13 +342,9 @@ export default function Home() {
         .bento-item.wide{grid-column:span 2}
         .bento-title{font-size:15px;font-weight:700;color:var(--text-bright);margin-bottom:6px}
         .bento-desc{font-size:13px;color:var(--text-dim);line-height:1.55}
+        @media(max-width:768px){.bento{grid-template-columns:1fr}.bento-item.wide{grid-column:span 1}}
 
-        @media(max-width:768px){
-          .bento{grid-template-columns:1fr}
-          .bento-item.wide{grid-column:span 1}
-        }
-
-        /* ── WORKFLOW ── */
+        /* Workflow */
         .wf-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
         .wf-card{border-radius:20px;padding:28px 26px;background:var(--bg-card);border:1px solid var(--border);transition:border-color .3s,box-shadow .3s;position:relative;overflow:hidden}
         .wf-card:hover{border-color:var(--border-hover);box-shadow:0 8px 32px var(--accent-glow)}
@@ -296,13 +355,92 @@ export default function Home() {
         .wf-desc{font-size:13.5px;color:var(--text-dim);line-height:1.6}
         .wf-img-wrap{margin-top:16px;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.06)}
         .wf-img-wrap img{width:100%;display:block;object-fit:cover}
-        .wf-connector{display:flex;align-items:center;gap:0;margin:0 -8px}
+        @media(max-width:768px){.wf-grid{grid-template-columns:1fr}}
 
-        @media(max-width:768px){
-          .wf-grid{grid-template-columns:1fr}
+        /* ── TIMELINE ── */
+        .tl-wrap{position:relative;display:flex;flex-direction:column;gap:0}
+        .tl-wrap::before{content:"";position:absolute;left:52px;top:12px;bottom:12px;width:1px;background:linear-gradient(180deg,rgba(74,108,247,0.3),rgba(124,92,230,0.15));pointer-events:none}
+        .tl-item{display:grid;grid-template-columns:104px 1fr;gap:24px;align-items:flex-start;padding:16px 0}
+        .tl-day-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;z-index:1}
+        .tl-dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,#4a6cf7,#7c5ce6);box-shadow:0 0 12px rgba(74,108,247,0.5);flex-shrink:0}
+        .tl-day{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);font-weight:700;letter-spacing:1px;white-space:nowrap}
+        .tl-card{border-radius:14px;padding:16px 20px;background:var(--bg-card);border:1px solid var(--border);transition:border-color .25s}
+        .tl-card:hover{border-color:var(--border-hover)}
+        .tl-title{font-size:14px;font-weight:700;color:var(--text-bright);margin-bottom:4px}
+        .tl-desc{font-size:13px;color:var(--text-dim);line-height:1.55}
+        @media(max-width:600px){
+          .tl-wrap::before{left:36px}
+          .tl-item{grid-template-columns:72px 1fr;gap:12px}
+          .tl-day{font-size:9px}
         }
 
-        /* ── FZ-152 ── */
+        /* ── STACK ── */
+        .stack-layout{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+        .stack-card{border-radius:18px;padding:24px;background:var(--bg-card);border:1px solid var(--border);transition:border-color .3s,box-shadow .3s}
+        .stack-card:hover{border-color:var(--border-hover);box-shadow:0 6px 24px var(--accent-glow)}
+        .stack-layer-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+        .stack-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+        .stack-chip{padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;border:1px solid}
+        .stack-desc{font-size:12.5px;color:var(--text-dim);line-height:1.5}
+        .stack-flow{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:32px;flex-wrap:wrap}
+        .stack-flow-item{padding:7px 16px;border-radius:8px;font-size:12px;font-weight:600;border:1px solid rgba(74,108,247,0.15);background:rgba(74,108,247,0.04);color:var(--accent)}
+        .stack-flow-arrow{color:var(--text-dim);font-size:16px}
+        @media(max-width:768px){.stack-layout{grid-template-columns:1fr}}
+
+        /* ── DEMO BLOCK ── */
+        .demo-block{border-radius:24px;padding:48px 44px;background:rgba(74,108,247,0.03);border:1px solid rgba(74,108,247,0.1);position:relative;overflow:hidden;text-align:center}
+        .demo-block::before{content:"";position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(74,108,247,0.07),transparent 70%);pointer-events:none}
+        .demo-block-badge{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border-radius:24px;border:1px solid rgba(52,211,153,0.2);background:rgba(52,211,153,0.05);font-size:11px;color:#34d399;font-weight:600;margin-bottom:16px;font-family:'JetBrains Mono',monospace;letter-spacing:1px}
+        .demo-block-badge .live-dot{width:6px;height:6px;border-radius:50%;background:#34d399;box-shadow:0 0 8px rgba(52,211,153,0.6);animation:livePulse 1.8s ease-in-out infinite}
+        .demo-block-h{font-size:clamp(20px,3vw,28px);font-weight:800;color:var(--text-bright);margin-bottom:10px;letter-spacing:-.5px}
+        .demo-block-p{font-size:14px;color:var(--text-dim);line-height:1.65;max-width:440px;margin:0 auto 28px}
+        .demo-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+        @media(max-width:480px){.demo-block{padding:28px 18px}}
+
+        /* ── PHONE SHOWCASE (mobile visible) ── */
+        .showcase-layout{display:grid;grid-template-columns:280px 1fr;gap:48px;align-items:center}
+        .showcase-phone{width:280px;border-radius:36px;background:#0a0c14;border:1.5px solid rgba(255,255,255,0.05);padding:10px;box-shadow:0 32px 80px rgba(0,0,0,0.5);animation:float 7s ease-in-out infinite}
+        .showcase-screen{background:#0e1018;border-radius:28px;padding:22px 12px 12px;min-height:400px;display:flex;flex-direction:column;gap:6px}
+        .showcase-header{display:flex;align-items:center;gap:8px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.04)}
+        .showcase-avatar{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#4a6cf7,#7c5ce6);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;flex-shrink:0}
+        .showcase-name{font-size:12px;font-weight:600;color:var(--text-bright)}
+        .showcase-status{font-size:10px;color:#34d399}
+        .showcase-points{display:flex;flex-direction:column;gap:12px}
+        .showcase-point{display:flex;gap:12px;align-items:flex-start}
+        .showcase-point-icon{width:32px;height:32px;border-radius:8px;background:rgba(74,108,247,0.1);border:1px solid rgba(74,108,247,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+        .showcase-point-text{font-size:13px;color:var(--text-dim);line-height:1.5}
+        .showcase-point-text strong{color:var(--text-bright);display:block;font-size:13px;margin-bottom:2px}
+        @media(max-width:768px){
+          .showcase-layout{grid-template-columns:1fr}
+          .showcase-phone{width:100%;max-width:320px;margin:0 auto}
+        }
+
+        /* ── CALC ── */
+        .calc-wrap{background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:32px 28px}
+        .calc-presets{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+        .calc-preset{padding:7px 18px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,0.07);background:transparent;color:var(--text-dim);font-family:inherit;transition:all .2s}
+        .calc-preset.active{background:rgba(74,108,247,0.1);border-color:rgba(74,108,247,0.3);color:var(--accent)}
+        .calc-preset:hover{border-color:rgba(255,255,255,0.12);color:var(--text)}
+        .calc-sliders{display:flex;flex-direction:column;gap:20px;margin-bottom:28px}
+        .calc-row{}
+        .calc-label{font-size:13px;color:var(--text-dim);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+        .calc-val{font-family:'JetBrains Mono',monospace;color:var(--accent);font-weight:700}
+        .calc-slider{width:100%;-webkit-appearance:none;appearance:none;height:3px;border-radius:2px;background:rgba(255,255,255,0.08);outline:none;cursor:pointer}
+        .calc-slider::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:linear-gradient(135deg,#4a6cf7,#7c5ce6);cursor:pointer;box-shadow:0 2px 8px rgba(74,108,247,0.4)}
+        .calc-results{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+        .calc-result-item{text-align:center;padding:20px 12px;border-radius:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05)}
+        .calc-result-item.highlight{background:rgba(74,108,247,0.05);border-color:rgba(74,108,247,0.15)}
+        .calc-result-val{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;background:linear-gradient(135deg,#638cff,#9f7afa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .calc-result-label{font-size:12px;color:var(--text);font-weight:600;margin-top:4px}
+        .calc-result-sub{font-size:11px;color:var(--text-dim);margin-top:2px;line-height:1.4}
+        .calc-cta-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+        .calc-disclaimer{font-size:11px;color:var(--text-dim);opacity:.6}
+        @media(max-width:600px){
+          .calc-results{grid-template-columns:1fr}
+          .calc-wrap{padding:20px 16px}
+        }
+
+        /* FZ-152 */
         .fz-card{border-radius:24px;padding:48px 44px;background:rgba(74,108,247,0.03);border:1px solid rgba(74,108,247,0.1);position:relative;overflow:hidden}
         .fz-card::before{content:"";position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(74,108,247,0.07),transparent 70%);pointer-events:none}
         .fz-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
@@ -314,35 +452,28 @@ export default function Home() {
         .fz-point-icon{width:32px;height:32px;border-radius:8px;background:rgba(74,108,247,0.08);border:1px solid rgba(74,108,247,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
         .fz-point-text{font-size:13.5px;color:var(--text-dim);line-height:1.55}
         .fz-point-text strong{color:var(--text);display:block;margin-bottom:2px;font-size:13px}
+        @media(max-width:768px){.fz-grid{grid-template-columns:1fr}.fz-card{padding:28px 22px}}
 
-        @media(max-width:768px){
-          .fz-grid{grid-template-columns:1fr}
-          .fz-card{padding:28px 22px}
-        }
-
-        /* ── TRUST ── */
+        /* Trust */
         .trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
         .trust-card{border-radius:18px;padding:24px 20px;background:var(--bg-card);border:1px solid var(--border);transition:border-color .3s}
         .trust-card:hover{border-color:var(--border-hover)}
         .trust-icon{font-size:22px;margin-bottom:12px}
         .trust-title{font-size:14px;font-weight:700;color:var(--text-bright);margin-bottom:6px}
         .trust-desc{font-size:12.5px;color:var(--text-dim);line-height:1.55}
-
-        @media(max-width:768px){
-          .trust-grid{grid-template-columns:1fr 1fr}
-        }
-        @media(max-width:420px){
-          .trust-grid{grid-template-columns:1fr}
-        }
+        @media(max-width:768px){.trust-grid{grid-template-columns:1fr 1fr}}
+        @media(max-width:420px){.trust-grid{grid-template-columns:1fr}}
 
         /* CTA */
         .cta-card{max-width:640px;margin:0 auto;border-radius:24px;padding:60px 40px;text-align:center;position:relative;overflow:hidden;background:var(--bg-card);backdrop-filter:blur(24px);border:1px solid var(--border);box-shadow:0 0 48px var(--accent-glow)}
         .cta-card .orb{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(74,108,247,0.08),transparent);pointer-events:none}
-
         @media(max-width:480px){
           .cta-card{padding:40px 24px}
           .btn-p,.btn-s{padding:12px 24px;font-size:13px}
         }
+
+        @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+        @keyframes typing{0%,80%,100%{transform:scale(0.6);opacity:.4}40%{transform:scale(1);opacity:1}}
       `}</style>
 
       {/* BG */}
@@ -360,9 +491,10 @@ export default function Home() {
             <span className="nav-name">agento</span>
           </div>
           <div className="nav-links">
-            <a href="#workflow" className="nav-link">Как работаем</a>
+            <a href="#workflow" className="nav-link">Процесс</a>
             <a href="#cases" className="nav-link">Кейсы</a>
-            <a href="#features" className="nav-link">Возможности</a>
+            <a href="#stack" className="nav-link">Стек</a>
+            <a href="#calc" className="nav-link">Калькулятор</a>
             <a href="#privacy" className="nav-link">Конфиденциальность</a>
             <a href={TG} target="_blank" rel="noopener noreferrer" className="nav-cta">Написать</a>
           </div>
@@ -373,7 +505,7 @@ export default function Home() {
       <section className="hero">
         <div className="wrap hero-grid">
           <div>
-            <S><div className="hero-badge"><span className="dot"/>от 3 дней</div></S>
+            <S><div className="hero-badge"><span className="dot"/>Принимаю проекты · Telegram, WhatsApp, Bitrix24</div></S>
             <S d={80}><h1 className="hero-h1">ИИ-агент продаёт<br/><span className="grad">пока вы спите</span></h1></S>
             <S d={150}><p className="hero-p">Клиенты уходят не потому что у вас плохой продукт — конкурент ответил быстрее. Агент отвечает за 2 секунды. Днём и ночью. Без выходных.</p></S>
             <S d={220}><div className="hero-btns">
@@ -418,6 +550,33 @@ export default function Home() {
         </div>
       </section>
 
+      {/* TIMELINE */}
+      <section id="timeline" style={{position:"relative",zIndex:1,padding:"100px 0"}}>
+        <div className="wrap">
+          <S><div style={{marginBottom:48}}>
+            <div className="sec-label">Таймлайн</div>
+            <h2 className="sec-h2">От первого звонка<br/>до запуска — 12 дней</h2>
+            <p style={{fontSize:15,color:"var(--text-dim)",marginTop:14,maxWidth:500,lineHeight:1.65}}>Конкретные сроки для каждого шага. Никакого «мы уточним позже».</p>
+          </div></S>
+          <S d={80}>
+            <div className="tl-wrap">
+              {TIMELINE.map((item, i) => (
+                <div key={i} className="tl-item">
+                  <div className="tl-day-wrap">
+                    <div className="tl-dot" />
+                    <div className="tl-day">{item.day}</div>
+                  </div>
+                  <div className="tl-card">
+                    <div className="tl-title">{item.t}</div>
+                    <div className="tl-desc">{item.d}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </S>
+        </div>
+      </section>
+
       {/* HOW */}
       <section id="how" style={{position:"relative",zIndex:1,padding:"100px 0"}}>
         <div className="wrap">
@@ -458,14 +617,10 @@ export default function Home() {
               <S d={150}><div style={{display:"flex",gap:10,flexWrap:"wrap",alignItems:"center"}}>
                 <a href={TG} target="_blank" rel="noopener noreferrer" className="btn-p">Хочу так же</a>
                 {tab === 0 && (
-                  <a href={CRM} target="_blank" rel="noopener noreferrer" className="btn-s" title="Демо-версия CRM. Реальные данные клиентов скрыты в целях конфиденциальности.">
-                    Демо CRM
-                  </a>
+                  <a href={CRM} target="_blank" rel="noopener noreferrer" className="btn-s" title="Демо-версия CRM. Реальные данные клиентов скрыты в целях конфиденциальности.">Демо CRM</a>
                 )}
               </div></S>
-              {tab === 0 && (
-                <S d={180}><div className="crm-note">* демо-версия CRM. реальные данные клиентов скрыты в целях конфиденциальности</div></S>
-              )}
+              {tab === 0 && (<S d={180}><div className="crm-note">* демо-версия CRM. реальные данные клиентов скрыты в целях конфиденциальности</div></S>)}
               {tab === 0 && (
                 <S d={220}><div className="demo-card">
                   <div className="demo-card-label"><span className="live-dot"/>Живое демо</div>
@@ -493,6 +648,144 @@ export default function Home() {
               </S>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* STACK */}
+      <section id="stack" style={{position:"relative",zIndex:1,padding:"100px 0"}}>
+        <div className="wrap">
+          <S><div style={{marginBottom:48}}>
+            <div className="sec-label">Инфраструктура</div>
+            <h2 className="sec-h2">Не один бот,<br/>а рабочая система</h2>
+            <p style={{fontSize:15,color:"var(--text-dim)",marginTop:14,maxWidth:520,lineHeight:1.65}}>Не навязываю один инструмент. Собираю решение под ваш бизнес: нужную модель, нужный канал, нужную CRM и нужную аналитику.</p>
+          </div></S>
+          <S d={80}>
+            <div className="stack-layout">
+              {STACK_LAYERS.map((layer, i) => (
+                <div key={i} className="stack-card">
+                  <div className="stack-layer-label" style={{color: layer.color}}>{layer.label}</div>
+                  <div className="stack-chips">
+                    {layer.items.map((item, j) => (
+                      <span key={j} className="stack-chip" style={{color: layer.color, borderColor: `${layer.color}30`, background: `${layer.color}0d`}}>{item}</span>
+                    ))}
+                  </div>
+                  <div className="stack-desc">{layer.desc}</div>
+                </div>
+              ))}
+            </div>
+          </S>
+          <S d={160}>
+            <div className="stack-flow">
+              {["Claude / OpenAI / YandexGPT", "→", "Telegram / WhatsApp / Сайт", "→", "Bitrix24 / amoCRM", "→", "Dashboard & Analytics"].map((item, i) => (
+                item === "→"
+                  ? <span key={i} className="stack-flow-arrow">→</span>
+                  : <span key={i} className="stack-flow-item">{item}</span>
+              ))}
+            </div>
+          </S>
+          <S d={200}>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12,marginTop:32}}>
+              {[
+                {t:"Подбираю модель под задачу",d:"Не всегда нужен самый дорогой стек. Оптимизирую под бюджет и требования."},
+                {t:"Можно начать с одного канала",d:"Сначала Telegram или сайт — потом масштабируем. Без переплаты за ненужное."},
+                {t:"Контур управления в подарок",d:"CRM, аналитика, история обращений. Вы видите каждый диалог и метрику."},
+              ].map((item, i) => (
+                <div key={i} style={{borderRadius:14,padding:"18px 20px",background:"var(--bg-card)",border:"1px solid var(--border)"}}>
+                  <div style={{fontSize:13,fontWeight:700,color:"var(--text-bright)",marginBottom:6}}>{item.t}</div>
+                  <div style={{fontSize:12.5,color:"var(--text-dim)",lineHeight:1.55}}>{item.d}</div>
+                </div>
+              ))}
+            </div>
+          </S>
+        </div>
+      </section>
+
+      {/* CALC */}
+      <section id="calc" style={{position:"relative",zIndex:1,padding:"100px 0"}}>
+        <div className="wrap">
+          <S><div style={{marginBottom:48}}>
+            <div className="sec-label">Калькулятор</div>
+            <h2 className="sec-h2">Посчитайте выгоду<br/>для своего бизнеса</h2>
+            <p style={{fontSize:15,color:"var(--text-dim)",marginTop:14,maxWidth:520,lineHeight:1.65}}>Передвигайте ползунки — увидите, сколько заявок теряете и сколько сможете сэкономить.</p>
+          </div></S>
+          <S d={80}><Calculator /></S>
+        </div>
+      </section>
+
+      {/* SHOWCASE */}
+      <section id="showcase" style={{position:"relative",zIndex:1,padding:"100px 0"}}>
+        <div className="wrap">
+          <S><div style={{marginBottom:48}}>
+            <div className="sec-label">Как это выглядит</div>
+            <h2 className="sec-h2">Что получает клиент<br/>на своём телефоне</h2>
+            <p style={{fontSize:15,color:"var(--text-dim)",marginTop:14,maxWidth:520,lineHeight:1.65}}>Агент выглядит как живой менеджер. Отвечает моментально, ведёт диалог, передаёт горячего лида.</p>
+          </div></S>
+          <S d={80}>
+            <div className="showcase-layout">
+              <div className="showcase-phone">
+                <div className="showcase-screen">
+                  <div className="showcase-header">
+                    <div className="showcase-avatar">A</div>
+                    <div>
+                      <div className="showcase-name">Agento</div>
+                      <div className="showcase-status">● онлайн</div>
+                    </div>
+                  </div>
+                  {[
+                    {r:"b",t:"Добрый день! Чем могу помочь?"},
+                    {r:"u",t:"Хочу узнать подробнее о ваших услугах"},
+                    {r:"b",t:"Конечно. Под какой бизнес подбираем решение?"},
+                    {r:"u",t:"Салон красоты, записи через WhatsApp"},
+                    {r:"b",t:"Отлично. Агент подключится к WhatsApp и будет записывать клиентов автоматически. Хотите увидеть демо прямо сейчас?"},
+                    {r:"u",t:"Да, покажите"},
+                    {r:"b",t:"Запускаю демо для вас. Сейчас пришлю ссылку 👇"},
+                  ].map((m,i)=>(
+                    <div key={i} style={{display:"flex",justifyContent:m.r==="u"?"flex-end":"flex-start"}}>
+                      <div className={m.r==="b"?"ph-b":"ph-u"}>{m.t}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="showcase-points">
+                {[
+                  {icon:"⚡",t:"Ответ за 2 секунды",d:"Клиент написал — агент уже отвечает. Даже ночью, в воскресенье, в праздник."},
+                  {icon:"🧠",t:"Понимает контекст",d:"Запоминает детали из диалога. Не просит повторять то, что уже сказано."},
+                  {icon:"📋",t:"Передаёт с резюме",d:"Менеджер видит: имя, потребность, история переписки. Сразу к делу."},
+                  {icon:"📱",t:"Любой мессенджер",d:"Telegram, WhatsApp, Avito, Instagram, чат на сайте — ваш выбор."},
+                ].map((p,i)=>(
+                  <S key={i} d={i*80}>
+                    <div className="showcase-point">
+                      <div className="showcase-point-icon">{p.icon}</div>
+                      <div className="showcase-point-text"><strong>{p.t}</strong>{p.d}</div>
+                    </div>
+                  </S>
+                ))}
+              </div>
+            </div>
+          </S>
+        </div>
+      </section>
+
+      {/* DEMO CTA BLOCK */}
+      <section style={{position:"relative",zIndex:1,padding:"60px 0"}}>
+        <div className="wrap">
+          <S>
+            <div className="demo-block">
+              <div className="demo-block-badge"><span className="live-dot"/>Ассистент онлайн прямо сейчас</div>
+              <h2 className="demo-block-h">Спросите ассистента прямо здесь</h2>
+              <p className="demo-block-p">Нажмите на иконку чата в правом нижнем углу — это реальный ИИ-ассистент. Спросите что угодно про автоматизацию, интеграции или цены.</p>
+              <div className="demo-btns">
+                <button className="btn-p" onClick={() => {
+                  const btn = document.querySelector('.cw-btn');
+                  if (btn) btn.click();
+                }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+                  Открыть чат
+                </button>
+                <a href={TG} target="_blank" rel="noopener noreferrer" className="btn-s">Написать в Telegram</a>
+              </div>
+            </div>
+          </S>
         </div>
       </section>
 
@@ -533,8 +826,8 @@ export default function Home() {
       <section style={{position:"relative",zIndex:1,padding:"80px 0"}}>
         <div className="wrap">
           <S><div style={{marginBottom:36}}>
-            <div className="sec-label">Почему я</div>
-            <h2 className="sec-h2">Работаю ответственно</h2>
+            <div className="sec-label">Стандарт</div>
+            <h2 className="sec-h2">Что получает каждый клиент</h2>
           </div></S>
           <div className="trust-grid">
             {TRUST.map((t,i)=>(
