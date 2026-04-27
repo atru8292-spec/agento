@@ -5,6 +5,7 @@ import ChatWidget from "@/components/ChatWidget";
 const TG = "https://t.me/arinashrr";
 const CRM = "https://speakup-crm.vercel.app";
 const DEMO_BOT = "https://t.me/sunsh22bot";
+const N8N_IMG = "https://i.ibb.co/VYB0mrTq/2026-04-27-10-43-09.png";
 
 /* ── Scroll reveal ── */
 function S({ children, d = 0, style = {} }) {
@@ -89,6 +90,53 @@ const FEATURES = [
   { t: "Работает с возражениями", d: "Персональные предложения которые закрывают конкретное сомнение клиента.", w: true },
   { t: "CRM-панель", d: "Все лиды, диалоги и метрики — в одном месте." },
   { t: "Эскалация менеджеру", d: "Сложный случай — передаёт с резюме диалога и рекомендацией." },
+];
+
+const WORKFLOW = [
+  {
+    n: "01",
+    icon: "💬",
+    t: "Обсуждаем задачу",
+    d: "Разбираемся, как должен работать бот: какие вопросы задавать, как квалифицировать, куда передавать лида. Я задаю правильные вопросы — вы получаете агента, который понимает ваш бизнес.",
+  },
+  {
+    n: "02",
+    icon: "🎯",
+    t: "Показываю мини-демо",
+    d: "Делаю рабочий прототип специально под ваш бизнес — не абстрактные скриншоты, а живой бот. Можете потрогать руками и понять, как это будет работать у вас.",
+  },
+  {
+    n: "03",
+    icon: "📋",
+    t: "Составляем ТЗ",
+    d: "Фиксируем всё письменно: логика диалогов, интеграции, сценарии, метрики. ТЗ — это защита для обеих сторон. Вы знаете что получите, я знаю что делать.",
+  },
+  {
+    n: "04",
+    icon: "⚙️",
+    t: "Разработка",
+    d: "Строю агента на n8n + Claude API. Каждый узел автоматизации — это логика, которую вы согласовали. Полная прозрачность: покажу схему до запуска.",
+    img: true,
+  },
+  {
+    n: "05",
+    icon: "🧪",
+    t: "Тестирование",
+    d: "Прогоняю все сценарии — типичные, нестандартные, стрессовые. Ловлю баги до того, как клиент их найдёт. Сдаю только то, в чём уверена.",
+  },
+  {
+    n: "06",
+    icon: "🛡️",
+    t: "Поддержка или передача",
+    d: "Выбор за вами: техническая поддержка от меня — или полная передача инструкций и доступов, чтобы вести всё самостоятельно. Никаких закрытых черных ящиков.",
+  },
+];
+
+const TRUST = [
+  { icon: "⚡", t: "Быстро", d: "От разговора до работающего агента — от 3 дней. Не месяцами, не «ждите ответа»." },
+  { icon: "🔍", t: "Прозрачно", d: "Фиксированное ТЗ, понятная цена, доступ к схемам. Вы видите каждый шаг." },
+  { icon: "🤝", t: "Без привязки", d: "Всё, что я делаю — остаётся у вас. Доступы, схемы, код — полностью ваши." },
+  { icon: "📊", t: "С результатом", d: "Ориентируюсь на метрики: конверсия, скорость ответа, количество лидов. Не «сдала и ушла»." },
 ];
 
 export default function Home() {
@@ -237,6 +285,56 @@ export default function Home() {
           .bento-item.wide{grid-column:span 1}
         }
 
+        /* ── WORKFLOW ── */
+        .wf-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+        .wf-card{border-radius:20px;padding:28px 26px;background:var(--bg-card);border:1px solid var(--border);transition:border-color .3s,box-shadow .3s;position:relative;overflow:hidden}
+        .wf-card:hover{border-color:var(--border-hover);box-shadow:0 8px 32px var(--accent-glow)}
+        .wf-card-accent{border-color:rgba(74,108,247,0.18);background:rgba(74,108,247,0.03)}
+        .wf-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);font-weight:700;opacity:.5;margin-bottom:10px;letter-spacing:2px}
+        .wf-icon{font-size:26px;margin-bottom:12px;display:block}
+        .wf-title{font-size:17px;font-weight:700;color:var(--text-bright);margin-bottom:8px}
+        .wf-desc{font-size:13.5px;color:var(--text-dim);line-height:1.6}
+        .wf-img-wrap{margin-top:16px;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.06)}
+        .wf-img-wrap img{width:100%;display:block;object-fit:cover}
+        .wf-connector{display:flex;align-items:center;gap:0;margin:0 -8px}
+
+        @media(max-width:768px){
+          .wf-grid{grid-template-columns:1fr}
+        }
+
+        /* ── FZ-152 ── */
+        .fz-card{border-radius:24px;padding:48px 44px;background:rgba(74,108,247,0.03);border:1px solid rgba(74,108,247,0.1);position:relative;overflow:hidden}
+        .fz-card::before{content:"";position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(74,108,247,0.07),transparent 70%);pointer-events:none}
+        .fz-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+        .fz-badge{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border-radius:24px;border:1px solid rgba(74,108,247,0.15);background:rgba(74,108,247,0.06);font-size:11px;color:var(--accent);font-weight:600;margin-bottom:20px;font-family:'JetBrains Mono',monospace;letter-spacing:1px}
+        .fz-h{font-size:clamp(20px,2.5vw,30px);font-weight:800;color:var(--text-bright);letter-spacing:-.5px;margin-bottom:14px;line-height:1.2}
+        .fz-p{font-size:14px;color:var(--text-dim);line-height:1.7;margin-bottom:0}
+        .fz-points{display:flex;flex-direction:column;gap:14px}
+        .fz-point{display:flex;gap:12px;align-items:flex-start}
+        .fz-point-icon{width:32px;height:32px;border-radius:8px;background:rgba(74,108,247,0.08);border:1px solid rgba(74,108,247,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+        .fz-point-text{font-size:13.5px;color:var(--text-dim);line-height:1.55}
+        .fz-point-text strong{color:var(--text);display:block;margin-bottom:2px;font-size:13px}
+
+        @media(max-width:768px){
+          .fz-grid{grid-template-columns:1fr}
+          .fz-card{padding:28px 22px}
+        }
+
+        /* ── TRUST ── */
+        .trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+        .trust-card{border-radius:18px;padding:24px 20px;background:var(--bg-card);border:1px solid var(--border);transition:border-color .3s}
+        .trust-card:hover{border-color:var(--border-hover)}
+        .trust-icon{font-size:22px;margin-bottom:12px}
+        .trust-title{font-size:14px;font-weight:700;color:var(--text-bright);margin-bottom:6px}
+        .trust-desc{font-size:12.5px;color:var(--text-dim);line-height:1.55}
+
+        @media(max-width:768px){
+          .trust-grid{grid-template-columns:1fr 1fr}
+        }
+        @media(max-width:420px){
+          .trust-grid{grid-template-columns:1fr}
+        }
+
         /* CTA */
         .cta-card{max-width:640px;margin:0 auto;border-radius:24px;padding:60px 40px;text-align:center;position:relative;overflow:hidden;background:var(--bg-card);backdrop-filter:blur(24px);border:1px solid var(--border);box-shadow:0 0 48px var(--accent-glow)}
         .cta-card .orb{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(74,108,247,0.08),transparent);pointer-events:none}
@@ -262,15 +360,16 @@ export default function Home() {
             <span className="nav-name">agento</span>
           </div>
           <div className="nav-links">
-            <a href="#how" className="nav-link">Процесс</a>
+            <a href="#workflow" className="nav-link">Как работаем</a>
             <a href="#cases" className="nav-link">Кейсы</a>
             <a href="#features" className="nav-link">Возможности</a>
+            <a href="#privacy" className="nav-link">Конфиденциальность</a>
             <a href={TG} target="_blank" rel="noopener noreferrer" className="nav-cta">Написать</a>
           </div>
         </div>
       </nav>
 
-           {/* HERO */}
+      {/* HERO */}
       <section className="hero">
         <div className="wrap hero-grid">
           <div>
@@ -288,6 +387,34 @@ export default function Home() {
             </div></S>
           </div>
           <S d={300}><Phone chat={CASES[0].chat.slice(0,7)}/></S>
+        </div>
+      </section>
+
+      {/* WORKFLOW */}
+      <section id="workflow" style={{position:"relative",zIndex:1,padding:"100px 0"}}>
+        <div className="wrap">
+          <S><div style={{marginBottom:48}}>
+            <div className="sec-label">Как я работаю</div>
+            <h2 className="sec-h2">Шесть шагов от идеи<br/>до работающего агента</h2>
+            <p style={{fontSize:15,color:"var(--text-dim)",marginTop:14,maxWidth:520,lineHeight:1.65}}>Никаких сюрпризов. Каждый этап согласован — вы знаете, что происходит и когда.</p>
+          </div></S>
+          <div className="wf-grid">
+            {WORKFLOW.map((w, i) => (
+              <S key={i} d={i * 80}>
+                <div className={`wf-card${i % 2 === 0 ? " wf-card-accent" : ""}`}>
+                  <div className="wf-num">{w.n}</div>
+                  <span className="wf-icon">{w.icon}</span>
+                  <div className="wf-title">{w.t}</div>
+                  <div className="wf-desc">{w.d}</div>
+                  {w.img && (
+                    <div className="wf-img-wrap">
+                      <img src={N8N_IMG} alt="Схема автоматизации в n8n" loading="lazy" width="600" height="300" />
+                    </div>
+                  )}
+                </div>
+              </S>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -362,6 +489,60 @@ export default function Home() {
                 <div className={`bento-item${f.w?" wide":""}`}>
                   <div className="bento-title">{f.t}</div>
                   <div className="bento-desc">{f.d}</div>
+                </div>
+              </S>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PRIVACY / FZ-152 */}
+      <section id="privacy" style={{position:"relative",zIndex:1,padding:"100px 0"}}>
+        <div className="wrap">
+          <S>
+            <div className="fz-card">
+              <div className="fz-grid">
+                <div>
+                  <div className="fz-badge">🔒 ФЗ-152 · Персональные данные</div>
+                  <h2 className="fz-h">Конфиденциальность — это часть работы, не опция</h2>
+                  <p className="fz-p">Перед каждым проектом мы обсуждаем, какие данные собирает агент и как они хранятся. Я учитываю требования Федерального закона №152-ФЗ «О персональных данных» — политику обработки, хранение на серверах РФ и согласие пользователей.</p>
+                  <div style={{marginTop:24}}>
+                    <a href={TG} target="_blank" rel="noopener noreferrer" className="btn-p" style={{fontSize:13,padding:"10px 24px"}}>Обсудить условия</a>
+                  </div>
+                </div>
+                <div className="fz-points">
+                  {[
+                    {icon:"📄", t:"Политика обработки данных", d:"Помогу составить политику конфиденциальности под ваш бот и бизнес."},
+                    {icon:"🇷🇺", t:"Хранение в РФ", d:"При необходимости настраиваем хранение данных на серверах в России — соответствие 149-ФЗ."},
+                    {icon:"✅", t:"Согласие пользователей", d:"Агент собирает согласие на обработку данных там, где это требуется по закону."},
+                    {icon:"🗑️", t:"Право на удаление", d:"По запросу клиента данные удаляются. Прописываем это в регламенте проекта."},
+                  ].map((p,i)=>(
+                    <div key={i} className="fz-point">
+                      <div className="fz-point-icon">{p.icon}</div>
+                      <div className="fz-point-text"><strong>{p.t}</strong>{p.d}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </S>
+        </div>
+      </section>
+
+      {/* TRUST */}
+      <section style={{position:"relative",zIndex:1,padding:"80px 0"}}>
+        <div className="wrap">
+          <S><div style={{marginBottom:36}}>
+            <div className="sec-label">Почему я</div>
+            <h2 className="sec-h2">Работаю ответственно</h2>
+          </div></S>
+          <div className="trust-grid">
+            {TRUST.map((t,i)=>(
+              <S key={i} d={i*70}>
+                <div className="trust-card">
+                  <div className="trust-icon">{t.icon}</div>
+                  <div className="trust-title">{t.t}</div>
+                  <div className="trust-desc">{t.d}</div>
                 </div>
               </S>
             ))}
