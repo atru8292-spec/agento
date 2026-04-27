@@ -207,6 +207,18 @@ export default function Home() {
         .case-metric-val{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;background:linear-gradient(135deg,#638cff,#9f7afa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
         .case-metric-label{font-size:11px;color:var(--text-dim);margin-top:4px}
 
+        .demo-card{margin-top:20px;padding:18px 22px;border-radius:16px;background:linear-gradient(135deg,rgba(99,140,255,0.05),rgba(159,122,250,0.04));border:1px solid rgba(99,140,255,0.12);position:relative;overflow:hidden}
+        .demo-card::before{content:"";position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(180deg,#638cff,#9f7afa)}
+        .demo-card-label{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--accent);font-weight:600;margin-bottom:8px;text-transform:uppercase;letter-spacing:2px;font-family:'JetBrains Mono',monospace}
+        .demo-card-label .live-dot{width:6px;height:6px;border-radius:50%;background:#34d399;box-shadow:0 0 8px rgba(52,211,153,0.6);animation:livePulse 1.8s ease-in-out infinite}
+        @keyframes livePulse{
+          0%,100%{opacity:1}
+          50%{opacity:.4}
+        }
+        .demo-card-text{font-size:14px;color:var(--text);margin-bottom:14px;line-height:1.55}
+
+        .crm-note{font-size:11px;color:var(--text-dim);opacity:.65;margin-top:10px;font-family:'JetBrains Mono',monospace;letter-spacing:.3px}
+
         @media(max-width:768px){
           .case-layout{grid-template-columns:1fr}
           .case-layout .phone-wrap{display:none}
@@ -258,7 +270,7 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* HERO */}
+           {/* HERO */}
       <section className="hero">
         <div className="wrap hero-grid">
           <div>
@@ -316,14 +328,21 @@ export default function Home() {
                   </div>
                 ))}
               </div></S>
-              <S d={150}><div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
+              <S d={150}><div style={{display:"flex",gap:10,flexWrap:"wrap",alignItems:"center"}}>
                 <a href={TG} target="_blank" rel="noopener noreferrer" className="btn-p">Хочу так же</a>
-                <a href={CRM} target="_blank" rel="noopener noreferrer" className="btn-s">Посмотреть CRM</a>
+                {tab === 0 && (
+                  <a href={CRM} target="_blank" rel="noopener noreferrer" className="btn-s" title="Демо-версия CRM. Реальные данные клиентов скрыты в целях конфиденциальности.">
+                    Демо CRM
+                  </a>
+                )}
               </div></S>
               {tab === 0 && (
-                <S d={200}><div style={{marginTop:20,padding:"16px 20px",borderRadius:14,background:"rgba(99,140,255,0.04)",border:"1px solid rgba(99,140,255,0.1)"}}>
-                  <div style={{fontSize:12,color:"var(--text-dim)",marginBottom:8,textTransform:"uppercase",letterSpacing:2,fontFamily:"'JetBrains Mono',monospace"}}>Живое демо</div>
-                  <div style={{fontSize:14,color:"var(--text)",marginBottom:12,lineHeight:1.5}}>Напишите боту Sunshine — это реальный агент который квалифицирует и записывает на урок. Посмотрите как это работает изнутри.</div>
+                <S d={180}><div className="crm-note">* демо-версия CRM. реальные данные клиентов скрыты в целях конфиденциальности</div></S>
+              )}
+              {tab === 0 && (
+                <S d={220}><div className="demo-card">
+                  <div className="demo-card-label"><span className="live-dot"/>Живое демо</div>
+                  <div className="demo-card-text">Напишите боту Sunshine — это реальный агент, который квалифицирует и записывает на урок. Посмотрите, как это работает изнутри.</div>
                   <a href={DEMO_BOT} target="_blank" rel="noopener noreferrer" className="btn-p" style={{fontSize:13,padding:"10px 22px"}}>Попробовать бота Sunshine</a>
                 </div></S>
               )}
